@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CE DEPT STUDY MATERIAL</title>
+    <link rel="icon" href="https://tse2.mm.bing.net/th/id/OIP.UN4baS4QfjtUDkm42MjJowHaFj?r=0&pid=Api&P=0&h=180">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./data.js"></script>
+    <script src="./nav.js"></script>
+</head>
+<body>
+        <header class="head">
+            <div class="header-brand">
+                <img src="https://tse1.mm.bing.net/th/id/OIP.F-dtCUHjw6vCQE8q6ucgEAHaCs?r=0&pid=Api&P=0&h=180" alt="logo" class="image">
+                <h2 class="heading">CE DPET STUDY MATERIAL</h2>
+            </div>
+            <div class="header-search">
+                <input id="subjectSearchInput" type="text" placeholder="Search by subject name or code" aria-label="Search by subject name or code">
+                <button type="button" class="search-btn" onclick="filterSubjectRows()">Search</button>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="container1">
+                <h1 class="font">Swamianrayan University</h1>
+                <h2>FACULTY OF ENGINEERING</h2>
+                <h3>COMPUTER ENGINEERING</h3>
+                <h1>STUDY MATERIAL</h1>
+            </div>
+
+
+            <h1 class="heading1">3rd Semester All Study Materials (Diploma)</h1>
+
+            <div class="container2">
+                <table id="subjectsTable">
+                    <tr>
+                        <th>S No.</th>
+                        <th>Subject</th>
+                        <th>Link of Subjects</th>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+        <script>
+            const semId = "sem3dip";
+
+            function filterSubjectRows() {
+                const input = document.getElementById('subjectSearchInput');
+                if (!input) return;
+
+                const query = input.value.trim().toLowerCase();
+                const rows = document.querySelectorAll('#subjectsTable tr:not(:first-child)');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(query) || query === '' ? '' : 'none';
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const input = document.getElementById('subjectSearchInput');
+                if (input) {
+                    input.addEventListener('input', filterSubjectRows);
+                }
+
+                // Dynamically populate subjects
+                const subjects = getSubjectsForSemester(semId);
+                const table = document.getElementById('subjectsTable');
+                
+                if (table && subjects.length > 0) {
+                    table.innerHTML = `
+                        <tr>
+                            <th>S No.</th>
+                            <th>Subject</th>
+                            <th>Link of Subjects</th>
+                        </tr>
+                    `;
+                    
+                    subjects.forEach((subj, idx) => {
+                        const tr = document.createElement('tr');
+                        
+                        const tdNo = document.createElement('td');
+                        tdNo.setAttribute('data-label', 'S No.');
+                        tdNo.textContent = (idx + 1) + '.';
+                        
+                        const tdName = document.createElement('td');
+                        tdName.setAttribute('data-label', 'Subject');
+                        tdName.textContent = subj.name;
+                        
+                        const tdLink = document.createElement('td');
+                        tdLink.setAttribute('data-label', 'Link of Subjects');
+                        
+                        const a = document.createElement('a');
+                        const semTitle = SUBJECT_CATALOG[semId] ? SUBJECT_CATALOG[semId].title : "";
+                        a.href = `./subject-page.html?code=${subj.code}&name=${encodeURIComponent(subj.name)}&sem=${encodeURIComponent(semTitle)}`;
+                        a.textContent = "View Materials";
+                        
+                        tdLink.appendChild(a);
+                        tr.appendChild(tdNo);
+                        tr.appendChild(tdName);
+                        tr.appendChild(tdLink);
+                        table.appendChild(tr);
+                    });
+                } else if (table) {
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.setAttribute('colspan', '3');
+                    td.textContent = "No subjects added yet for this semester.";
+                    tr.appendChild(td);
+                    table.appendChild(tr);
+                }
+            });
+        </script>
+</body>
+</html>

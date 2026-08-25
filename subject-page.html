@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Resource Page</title>
+    <link rel="icon" href="https://tse2.mm.bing.net/th/id/OIP.UN4baS4QfjtUDkm42MjJowHaFj?r=0&pid=Api&P=0&h=180">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./data.js"></script>
+    <script src="./nav.js"></script>
+</head>
+<body>
+    <header class="head">
+        <div class="header-brand">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.F-dtCUHjw6vCQE8q6ucgEAHaCs?r=0&pid=Api&P=0&h=180" alt="logo" class="image">
+            <h2 class="heading">CE STUDY MATERIAL</h2>
+        </div>
+        <div class="header-search">
+            <input type="text" placeholder="Search by subject name or code" aria-label="Search by subject name or code">
+            <button type="button" class="search-btn">Search</button>
+        </div>
+    </header>
+
+    <main class="subject-page">
+        <section class="subject-hero">
+            <p class="subject-badge">Semester 1 / Degree</p>
+            <h1>Engineering Mathematics - I</h1>
+            <div class="subject-meta">
+                <span>Subject Code: CE101</span>
+                <span>Department: Computer Engineering</span>
+            </div>
+            <div class="role-switch" aria-label="Choose user role">
+                <button type="button" class="role-button" data-role="student">Student View</button>
+                <button type="button" class="role-button active" data-role="staff">Staff View</button>
+            </div>
+            <a href="./index.html" class="back-link">Back to Home</a>
+        </section>
+
+        <section class="resource-grid">
+            <article class="resource-card">
+                <h3>Lab Manual</h3>
+                <p>Practical experiments, procedures, and evaluation sheets for the subject.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
+                    <span>Upload Lab Manual</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Lab Manual - Practical Set 1.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Lab Manual - Observation Sheet.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="resource-card">
+                <h3>Syllabus</h3>
+                <p>Course structure, topics, learning outcomes, and marking scheme.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <span>Upload Syllabus</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Syllabus - CE101.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="resource-card">
+                <h3>Unit Notes</h3>
+                <p>Handwritten or typed notes for each unit and chapter.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <span>Upload Notes</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Unit 1 Notes.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Unit 2 Notes.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Unit 3 Notes.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="resource-card">
+                <h3>Assignments</h3>
+                <p>Assignment sheets, questions, and solution files for students.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <span>Upload Assignment</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Assignment 1.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Assignment 2.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="resource-card">
+                <h3>Mid Question Bank</h3>
+                <p>Important midterm questions and expected exam practice resources.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <span>Upload Mid QBank</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Mid QBank - Important Questions.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Mid QBank - Unit Wise.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="resource-card">
+                <h3>Final Question Bank</h3>
+                <p>Final exam preparation material with important long and short questions.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <span>Upload Final QBank</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Final QBank - Full Course.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Final QBank - Sample Paper.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="resource-card resource-card-wide">
+                <h3>Question Bank Solutions</h3>
+                <p>Solved papers, explanations, and step-by-step answers for practice.</p>
+
+                <label class="upload-box">
+                    <input class="resource-upload" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <span>Upload Solutions</span>
+                </label>
+
+                <div class="resource-files">
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Solution Key - Mid.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Solution Key - Final.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                    <div class="resource-item">
+                        <a href="#" target="_blank" download>Model Answers - All Units.pdf</a>
+                        <button class="delete-file" type="button">Delete</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        // Parse URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const subjectCode = urlParams.get('code') || 'CE101';
+        const subjectName = urlParams.get('name') || 'Engineering Mathematics - I';
+        const semesterBadge = urlParams.get('sem') || 'Semester 1 / Degree';
+
+        // Update DOM elements with subject info
+        document.addEventListener('DOMContentLoaded', function() {
+            const badgeEl = document.querySelector('.subject-badge');
+            const nameEl = document.querySelector('.subject-hero h1');
+            const codeEl = document.querySelector('.subject-meta span:first-child');
+            if (badgeEl) badgeEl.textContent = semesterBadge;
+            if (nameEl) nameEl.textContent = subjectName;
+            if (codeEl) codeEl.textContent = 'Subject Code: ' + subjectCode;
+            document.title = subjectName + ' - Study Material';
+
+            // Custom search filter for subject resources page
+            const searchInput = document.querySelector('.header-search input');
+            const searchBtn = document.querySelector('.header-search button');
+            if (searchInput && searchBtn) {
+                function filterCards() {
+                    const q = searchInput.value.toLowerCase().trim();
+                    document.querySelectorAll('.resource-card').forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const text = card.querySelector('p').textContent.toLowerCase();
+                        const items = Array.from(card.querySelectorAll('.resource-item a'));
+                        const hasFiles = items.some(a => a.textContent.toLowerCase().includes(q));
+                        if (title.includes(q) || text.includes(q) || hasFiles || q === '') {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
+                searchInput.addEventListener('input', filterCards);
+                searchBtn.addEventListener('click', filterCards);
+            }
+        });
+
+        const uploadInputs = document.querySelectorAll('.resource-upload');
+        const storageKey = 'resources_' + subjectCode;
+        const roleKey = 'subject-role';
+        const staffAuthKey = 'subject-staff-auth';
+        const staffPassword = 'staff123';
+
+        function setRole(role) {
+            const staffMode = role === 'staff';
+            document.body.dataset.role = role;
+
+            document.querySelectorAll('.role-button').forEach(button => {
+                const isActive = button.dataset.role === role;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+
+            document.querySelectorAll('.upload-box, .delete-file').forEach(element => {
+                element.style.display = staffMode ? '' : 'none';
+            });
+
+            localStorage.setItem(roleKey, role);
+            if (!staffMode) {
+                localStorage.setItem(staffAuthKey, 'false');
+            }
+        }
+
+        function unlockStaffAccess() {
+            const enteredPassword = window.prompt('Enter staff password to unlock staff view');
+
+            if (enteredPassword === staffPassword) {
+                localStorage.setItem(staffAuthKey, 'true');
+                setRole('staff');
+                return;
+            }
+
+            localStorage.setItem(staffAuthKey, 'false');
+            setRole('student');
+            window.alert('Incorrect password. Student view remains active.');
+        }
+
+        function saveResources() {
+            const resources = {};
+
+            document.querySelectorAll('.resource-card').forEach(card => {
+                const title = card.querySelector('h3')?.textContent.trim();
+                const items = [...card.querySelectorAll('.resource-item')].map(item => {
+                    const link = item.querySelector('a');
+                    return {
+                        name: link ? link.textContent.trim() : '',
+                        href: link ? link.getAttribute('href') : ''
+                    };
+                }).filter(item => item.name && item.href);
+
+                if (title) {
+                    resources[title] = items;
+                }
+            });
+
+            localStorage.setItem(storageKey, JSON.stringify(resources));
+        }
+
+        function createResourceItem(name, href) {
+            const item = document.createElement('div');
+            item.className = 'resource-item';
+
+            const link = document.createElement('a');
+            link.href = href;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.download = name;
+            link.textContent = name;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'delete-file';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', function () {
+                item.remove();
+                saveResources();
+            });
+
+            item.appendChild(link);
+            item.appendChild(deleteBtn);
+            
+            // Adjust display based on role
+            const currentRole = document.body.dataset.role || 'student';
+            deleteBtn.style.display = currentRole === 'staff' ? '' : 'none';
+            
+            return item;
+        }
+
+        function renderSavedResources() {
+            let saved = JSON.parse(localStorage.getItem(storageKey));
+            
+            // If nothing is stored, load default materials from catalog in data.js
+            if (!saved) {
+                const catalogMatch = findSubjectByCode(subjectCode);
+                saved = (catalogMatch && catalogMatch.materials) ? catalogMatch.materials : {};
+                localStorage.setItem(storageKey, JSON.stringify(saved));
+            }
+
+            const cards = document.querySelectorAll('.resource-card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3')?.textContent.trim();
+                const resourceFiles = card.querySelector('.resource-files');
+
+                if (!title || !resourceFiles) return;
+
+                resourceFiles.innerHTML = '';
+                const items = saved[title] || [];
+                
+                if (items.length === 0) {
+                    resourceFiles.innerHTML = '<div class="no-materials">No files uploaded yet.</div>';
+                } else {
+                    items.forEach(item => {
+                        resourceFiles.appendChild(createResourceItem(item.name, item.href));
+                    });
+                }
+            });
+        }
+
+        uploadInputs.forEach(input => {
+            input.addEventListener('change', function () {
+                if (document.body.dataset.role !== 'staff') return;
+
+                const files = Array.from(this.files);
+                if (!files.length) return;
+
+                const resourceCard = this.closest('.resource-card');
+                const resourceFiles = resourceCard.querySelector('.resource-files');
+                
+                // Clear the "no-materials" placeholder if it exists
+                const placeholder = resourceFiles.querySelector('.no-materials');
+                if (placeholder) {
+                    placeholder.remove();
+                }
+
+                files.forEach(file => {
+                    const href = URL.createObjectURL(file);
+                    const item = createResourceItem(file.name, href);
+                    resourceFiles.appendChild(item);
+                });
+
+                saveResources();
+                this.value = '';
+            });
+        });
+
+        document.querySelectorAll('.role-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const selectedRole = this.dataset.role;
+
+                if (selectedRole === 'staff') {
+                    const isStaffAuthenticated = localStorage.getItem(staffAuthKey) === 'true';
+                    if (!isStaffAuthenticated) {
+                        unlockStaffAccess();
+                        return;
+                    }
+                }
+
+                setRole(selectedRole);
+            });
+        });
+
+        renderSavedResources();
+
+        if (localStorage.getItem(staffAuthKey) === 'true') {
+            setRole('staff');
+        } else {
+            setRole('student');
+        }
+    </script>
+</body>
+</html>

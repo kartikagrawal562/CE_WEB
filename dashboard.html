@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CE Dept Study Dashboard</title>
+    <link rel="icon" href="https://tse2.mm.bing.net/th/id/OIP.UN4baS4QfjtUDkm42MjJowHaFj?r=0&pid=Api&P=0&h=180">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./data.js"></script>
+    <script src="./nav.js"></script>
+</head>
+<body>
+    <header class="head">
+        <div class="header-brand">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.F-dtCUHjw6vCQE8q6ucgEAHaCs?r=0&pid=Api&P=0&h=180" alt="logo" class="image">
+            <h2 class="heading">CE STUDY PORTAL</h2>
+        </div>
+        <div class="header-search">
+            <input id="dashboardSearchInput" type="text" placeholder="Search subject name, code, or material" aria-label="Search dashboard">
+            <button type="button" class="search-btn" id="dashboardSearchBtn">Search</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- Dashboard Header -->
+        <section class="dashboard-header-section">
+            <h1 class="dashboard-title">Study Material Dashboard</h1>
+            <p class="dashboard-subtitle">Central hub for Computer Engineering study materials. View, search, and download resources.</p>
+            
+            <div class="role-switch" aria-label="Choose user role" style="margin-top: 15px; margin-bottom: 0;">
+                <button type="button" class="role-button" data-role="student" id="roleStudentBtn">Student View</button>
+                <button type="button" class="role-button" data-role="staff" id="roleStaffBtn">Staff View</button>
+            </div>
+        </section>
+
+        <!-- Controls (Filters) -->
+        <section class="dashboard-controls">
+            <div class="dashboard-search" style="display: none;">
+                <!-- Fallback search container if needed -->
+            </div>
+            <div class="dashboard-filters">
+                <button type="button" class="filter-btn active" data-filter="all">All Semesters</button>
+                <button type="button" class="filter-btn" data-filter="degree">Degree (CE) Only</button>
+                <button type="button" class="filter-btn" data-filter="diploma">Diploma (CE) Only</button>
+            </div>
+            <div class="staff-actions-top" style="display: none;">
+                <button type="button" class="add-subject-btn" style="padding: 8px 16px; font-size: 0.85rem;" id="openAddSubjectBtnTop">Add Subject</button>
+            </div>
+        </section>
+
+        <!-- Semester List (Accordion) -->
+        <section class="semester-list" id="semesterListContainer">
+            <!-- Dynamically populated -->
+        </section>
+    </main>
+
+    <!-- Modal for Adding New Subjects (Staff View) -->
+    <div class="modal" id="addSubjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Subject</h3>
+                <button type="button" class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <form class="modal-form" id="addSubjectForm">
+                <div class="form-group">
+                    <label for="modalSemesterSelect">Target Semester</label>
+                    <select id="modalSemesterSelect" required>
+                        <option value="sem1">1st Sem (Degree)</option>
+                        <option value="sem3">3rd Sem (Degree)</option>
+                        <option value="sem5">5th Sem (Degree)</option>
+                        <option value="sem7">7th Sem (Degree)</option>
+                        <option value="sem1dip">1st Sem (Diploma)</option>
+                        <option value="sem3dip">3rd Sem (Diploma)</option>
+                        <option value="sem5dip">5th Sem (Diploma)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="modalSubjectName">Subject Name</label>
+                    <input type="text" id="modalSubjectName" placeholder="e.g. Data Structures" required>
+                </div>
+                <div class="form-group">
+                    <label for="modalSubjectCode">Subject Code</label>
+                    <input type="text" id="modalSubjectCode" placeholder="e.g. CE301" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Subject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const roleKey = 'subject-role';
+        const staffAuthKey = 'subject-staff-auth';
+        const staffPassword = 'staff123';
+
+        // Material categories as defined in subject page
+        const MATERIAL_CATEGORIES = [
+            "Syllabus",
+            "Lab Manual",
+            "Unit Notes",
+            "Assignments",
+            "Mid Question Bank",
+            "Final Question Bank",
+            "Question Bank Solutions"
+        ];
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Role switching helpers
+        function setDashboardRole(role) {
+            const isStaff = role === 'staff';
+            document.body.dataset.role = role;
+
+            document.getElementById('roleStudentBtn').classList.toggle('active', !isStaff);
+            document.getElementById('roleStaffBtn').classList.toggle('active', isStaff);
+            
+            document.getElementById('roleStudentBtn').setAttribute('aria-pressed', String(!isStaff));
+            document.getElementById('roleStaffBtn').setAttribute('aria-pressed', String(isStaff));
+
+            localStorage.setItem(roleKey, role);
+            if (!isStaff) {
+                localStorage.setItem(staffAuthKey, 'false');
+            }
+
+            // Show or hide staff elements
+            document.querySelectorAll('.staff-only').forEach(el => {
+                el.style.display = isStaff ? '' : 'none';
+            });
+            document.querySelectorAll('.upload-box-mini').forEach(el => {
+                el.style.display = isStaff ? '' : 'none';
+            });
+            document.querySelectorAll('.delete-btn-mini').forEach(el => {
+                el.style.display = isStaff ? '' : 'none';
+            });
+
+            const topStaffBtn = document.querySelector('.staff-actions-top');
+            if (topStaffBtn) topStaffBtn.style.display = isStaff ? '' : 'none';
+        }
+
+        function unlockStaffRole() {
+            const entered = window.prompt('Enter staff password to unlock staff view');
+            if (entered === staffPassword) {
+                localStorage.setItem(staffAuthKey, 'true');
+                setDashboardRole('staff');
+                return;
+            }
+            localStorage.setItem(staffAuthKey, 'false');
+            setDashboardRole('student');
+            window.alert('Incorrect password. Student view remains active.');
+        }
+
+        // Render dashboard semesters, subjects, and materials
+        function renderDashboard() {
+            const container = document.getElementById('semesterListContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            for (const semId in SUBJECT_CATALOG) {
+                const semData = SUBJECT_CATALOG[semId];
+                
+                // Apply filters (Degree vs Diploma)
+                const isDiploma = semId.toLowerCase().includes('dip');
+                if (currentFilter === 'degree' && isDiploma) continue;
+                if (currentFilter === 'diploma' && !isDiploma) continue;
+
+                // Load subjects for this semester
+                const subjects = getSubjectsForSemester(semId);
+
+                // Filter subjects by search query
+                const filteredSubjects = subjects.filter(subj => {
+                    const matchName = subj.name.toLowerCase().includes(searchQuery);
+                    const matchCode = subj.code.toLowerCase().includes(searchQuery);
+                    
+                    // Also check if any file in its materials matches
+                    const materialsKey = 'resources_' + subj.code;
+                    let materials = JSON.parse(localStorage.getItem(materialsKey));
+                    if (!materials) {
+                        materials = subj.materials || {};
+                    }
+                    
+                    let matchFiles = false;
+                    for (const cat in materials) {
+                        const files = materials[cat] || [];
+                        if (files.some(f => f.name.toLowerCase().includes(searchQuery))) {
+                            matchFiles = true;
+                            break;
+                        }
+                    }
+
+                    return searchQuery === '' || matchName || matchCode || matchFiles;
+                });
+
+                // If searching and this semester has no matching subjects, hide the semester block
+                if (searchQuery !== '' && filteredSubjects.length === 0) continue;
+
+                // Create semester accordion block
+                const semBlock = document.createElement('div');
+                semBlock.className = 'semester-block';
+                semBlock.id = 'block_' + semId;
+
+                // Header
+                const semHeader = document.createElement('div');
+                semHeader.className = 'semester-header';
+                semHeader.innerHTML = `
+                    <h3>${semData.title}</h3>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <button type="button" class="btn-primary staff-only add-subject-inline-btn" data-sem="${semId}" style="padding: 5px 12px; font-size: 0.8rem; border: 1px solid #f7c948;" onclick="event.stopPropagation(); openAddSubjectModal('${semId}')">Add Subject</button>
+                        <span class="semester-toggle-icon">▼</span>
+                    </div>
+                `;
+                semHeader.addEventListener('click', () => {
+                    semBlock.classList.toggle('collapsed');
+                    // Save toggle status in session storage
+                    sessionStorage.setItem('collapsed_' + semId, semBlock.classList.contains('collapsed'));
+                });
+
+                // Restore collapse/expanded state
+                const isCollapsedSaved = sessionStorage.getItem('collapsed_' + semId) === 'true';
+                if (isCollapsedSaved && searchQuery === '') {
+                    semBlock.classList.add('collapsed');
+                }
+
+                // Content (Subject grid)
+                const semContent = document.createElement('div');
+                semContent.className = 'semester-content';
+
+                if (filteredSubjects.length === 0) {
+                    semContent.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #64748b; font-style: italic; padding: 20px;">No subjects found.</div>`;
+                } else {
+                    filteredSubjects.forEach(subj => {
+                        const subjCard = document.createElement('div');
+                        subjCard.className = 'subject-card';
+
+                        // Fetch subject materials
+                        const materialsKey = 'resources_' + subj.code;
+                        let materials = JSON.parse(localStorage.getItem(materialsKey));
+                        if (!materials) {
+                            materials = subj.materials || {};
+                        }
+
+                        // Subject header
+                        const cardHeader = document.createElement('div');
+                        cardHeader.className = 'subject-card-header';
+                        cardHeader.innerHTML = `
+                            <div class="subject-info">
+                                <h4>${subj.name}</h4>
+                                <div class="subject-meta-tags">
+                                    <span class="subject-code">${subj.code}</span>
+                                </div>
+                            </div>
+                            <a class="subject-link-btn" href="./subject-page.html?code=${subj.code}&name=${encodeURIComponent(subj.name)}&sem=${encodeURIComponent(semData.title)}">Go to Page</a>
+                        `;
+                        subjCard.appendChild(cardHeader);
+
+                        // Materials details section
+                        const materialsSec = document.createElement('div');
+                        materialsSec.className = 'materials-section';
+                        materialsSec.innerHTML = `<h5>Study Materials</h5>`;
+
+                        const materialsList = document.createElement('div');
+                        materialsList.className = 'materials-list';
+
+                        MATERIAL_CATEGORIES.forEach(category => {
+                            const files = materials[category] || [];
+                            
+                            // Render category container
+                            const groupDiv = document.createElement('div');
+                            groupDiv.className = 'material-group';
+                            
+                            const groupTitle = document.createElement('div');
+                            groupTitle.className = 'material-group-title';
+                            groupTitle.textContent = category;
+                            groupDiv.appendChild(groupTitle);
+
+                            const filesContainer = document.createElement('div');
+                            filesContainer.className = 'group-files-container';
+
+                            if (files.length === 0) {
+                                filesContainer.innerHTML = `<div class="no-materials">No files.</div>`;
+                            } else {
+                                files.forEach((file, fIdx) => {
+                                    const fileItem = document.createElement('div');
+                                    fileItem.className = 'material-file-item';
+                                    
+                                    const fileLink = document.createElement('a');
+                                    fileLink.href = file.href;
+                                    fileLink.textContent = file.name;
+                                    fileLink.target = '_blank';
+                                    if (file.href !== '#') {
+                                        fileLink.download = file.name;
+                                    }
+                                    
+                                    // Delete file button for Staff View
+                                    const delBtn = document.createElement('button');
+                                    delBtn.type = 'button';
+                                    delBtn.className = 'delete-btn-mini delete-file';
+                                    delBtn.innerHTML = '&times;';
+                                    delBtn.style.padding = '2px 6px';
+                                    delBtn.style.background = '#fee2e2';
+                                    delBtn.style.color = '#991b1b';
+                                    delBtn.style.border = 'none';
+                                    delBtn.style.borderRadius = '4px';
+                                    delBtn.style.cursor = 'pointer';
+                                    delBtn.style.fontWeight = 'bold';
+                                    delBtn.style.fontSize = '0.75rem';
+                                    
+                                    delBtn.addEventListener('click', () => {
+                                        // Delete file logic
+                                        const updatedFiles = files.filter((_, idx) => idx !== fIdx);
+                                        materials[category] = updatedFiles;
+                                        localStorage.setItem(materialsKey, JSON.stringify(materials));
+                                        renderDashboard(); // Re-render dashboard
+                                    });
+
+                                    fileItem.appendChild(fileLink);
+                                    fileItem.appendChild(delBtn);
+                                    filesContainer.appendChild(fileItem);
+                                });
+                            }
+                            groupDiv.appendChild(filesContainer);
+
+                            // Upload form/input for Staff view
+                            const uploadBoxMini = document.createElement('label');
+                            uploadBoxMini.className = 'upload-box-mini';
+                            uploadBoxMini.style.display = 'block';
+                            uploadBoxMini.style.marginTop = '6px';
+                            uploadBoxMini.style.fontSize = '0.75rem';
+                            uploadBoxMini.style.color = '#5c470f';
+                            uploadBoxMini.style.background = '#fff9e9';
+                            uploadBoxMini.style.border = '1px dashed #c9b66a';
+                            uploadBoxMini.style.borderRadius = '6px';
+                            uploadBoxMini.style.padding = '4px 8px';
+                            uploadBoxMini.style.textAlign = 'center';
+                            uploadBoxMini.style.cursor = 'pointer';
+                            uploadBoxMini.innerHTML = `
+                                <span>+ Add File</span>
+                                <input type="file" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
+                            `;
+                            
+                            const fileInput = uploadBoxMini.querySelector('input');
+                            fileInput.addEventListener('change', function() {
+                                const selectedFiles = Array.from(this.files);
+                                if (selectedFiles.length === 0) return;
+
+                                const newFiles = [...files];
+                                selectedFiles.forEach(file => {
+                                    newFiles.push({
+                                        name: file.name,
+                                        href: URL.createObjectURL(file)
+                                    });
+                                });
+
+                                materials[category] = newFiles;
+                                localStorage.setItem(materialsKey, JSON.stringify(materials));
+                                renderDashboard(); // Refresh view
+                            });
+
+                            groupDiv.appendChild(uploadBoxMini);
+                            materialsList.appendChild(groupDiv);
+                        });
+
+                        materialsSec.appendChild(materialsList);
+                        subjCard.appendChild(materialsSec);
+                        semContent.appendChild(subjCard);
+                    });
+                }
+
+                semBlock.appendChild(semHeader);
+                semBlock.appendChild(semContent);
+                container.appendChild(semBlock);
+            }
+
+            // Sync displays with role
+            const currentRole = localStorage.getItem(roleKey) || 'student';
+            setDashboardRole(currentRole);
+        }
+
+        // Modal triggers
+        const modal = document.getElementById('addSubjectModal');
+        
+        window.openAddSubjectModal = function(semId) {
+            if (document.body.dataset.role !== 'staff') return;
+            
+            const semSelect = document.getElementById('modalSemesterSelect');
+            if (semSelect && semId) {
+                semSelect.value = semId;
+            }
+            
+            modal.classList.add('open');
+        }
+
+        function closeAddSubjectModal() {
+            modal.classList.remove('open');
+            document.getElementById('addSubjectForm').reset();
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Role switcher hooks
+            document.getElementById('roleStudentBtn').addEventListener('click', () => {
+                setDashboardRole('student');
+            });
+            document.getElementById('roleStaffBtn').addEventListener('click', () => {
+                const authenticated = localStorage.getItem(staffAuthKey) === 'true';
+                if (!authenticated) {
+                    unlockStaffRole();
+                } else {
+                    setDashboardRole('staff');
+                }
+            });
+
+            // Semester type filter tabs
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderDashboard();
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('dashboardSearchInput');
+            const searchBtn = document.getElementById('dashboardSearchBtn');
+
+            function performSearch() {
+                searchQuery = searchInput.value.toLowerCase().trim();
+                renderDashboard();
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', performSearch);
+            }
+            if (searchBtn) {
+                searchBtn.addEventListener('click', performSearch);
+            }
+
+            // Modal closing bindings
+            document.getElementById('closeModalBtn').addEventListener('click', closeAddSubjectModal);
+            document.getElementById('cancelModalBtn').addEventListener('click', closeAddSubjectModal);
+            
+            // Top action bar trigger
+            const openAddBtnTop = document.getElementById('openAddSubjectBtnTop');
+            if (openAddBtnTop) {
+                openAddBtnTop.addEventListener('click', () => {
+                    window.openAddSubjectModal('');
+                });
+            }
+
+            // Handle add subject form submit
+            document.getElementById('addSubjectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const semId = document.getElementById('modalSemesterSelect').value;
+                const name = document.getElementById('modalSubjectName').value.trim();
+                const code = document.getElementById('modalSubjectCode').value.trim().toUpperCase();
+
+                if (!semId || !name || !code) return;
+
+                // Save to local storage custom subjects catalog
+                addCustomSubject(semId, code, name);
+                closeAddSubjectModal();
+                
+                // Expand this block so they can see the new subject
+                sessionStorage.setItem('collapsed_' + semId, 'false');
+
+                // Re-render
+                renderDashboard();
+            });
+
+            // Initial rendering
+            renderDashboard();
+        });
+    </script>
+</body>
+</html>
