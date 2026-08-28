@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 280px;
+    height: 100vh;
+
+    background: #111827;
+
+    color: white;
+
+    overflow-y: auto;
+
+    z-index: 1000;
+
+    transition: 0.3s ease;
+}
+
+
+/* Sidebar Header */
+
+.sidebar-header {
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+.logo i {
+    font-size: 25px;
+}
+
+
+/* Close Button */
+
+.close-btn {
+
+    display: none;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.menu {
+
+    list-style: none;
+
+    padding: 15px 10px;
+}
+
+
+.menu li {
+    margin-bottom: 5px;
+}
+
+
+.menu a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 13px 15px;
+
+    color: #d1d5db;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+
+.menu a:hover {
+
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.menu a i {
+    width: 20px;
+}
+
+
+/* =========================
+   MENU TITLE
+========================= */
+
+.menu-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 18px 15px 8px;
+
+    color: #60a5fa;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================
+   DROPDOWN BUTTON
+========================= */
+
+.dropdown-btn {
+
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #d1d5db;
+
+    padding: 13px 15px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 15px;
+
+    text-align: left;
+}
+
+
+.dropdown-btn:hover {
+
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.dropdown-btn span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+/* Arrow */
+
+.arrow {
+
+    transition: 0.3s;
+}
+
+
+/* Rotate arrow */
+
+.dropdown.active .arrow {
+
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+   SUBMENU
+========================= */
+
+.submenu {
+
+    list-style: none;
+
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition: max-height 0.3s ease;
+
+    padding-left: 20px;
+}
+
+
+.dropdown.active .submenu {
+
+    max-height: 500px;
+}
+
+
+.submenu li {
+    margin: 2px 0;
+}
+
+
+.submenu a {
+
+    padding: 10px 15px;
+
+    font-size: 14px;
+
+    border-left: 2px solid #374151;
+
+    border-radius: 0 6px 6px 0;
+}
+
+
+.submenu a:hover {
+
+    border-left: 2px solid #60a5fa;
+
+    background: #1e3a8a;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+
+    margin-left: 280px;
+
+    min-height: 100vh;
+
+    padding: 30px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.top-header {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+
+    margin-bottom: 25px;
+}
+
+
+.top-header h1 {
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+
+.top-header p {
+
+    color: #6b7280;
+}
+
+
+/* =========================
+   WELCOME CARD
+========================= */
+
+.welcome-card {
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+
+.welcome-card h2 {
+
+    margin-bottom: 10px;
+
+    font-size: 24px;
+}
+
+
+.welcome-card p {
+
+    color: #dbeafe;
+
+    max-width: 600px;
+
+    line-height: 1.6;
+}
+
+
+.welcome-card > i {
+
+    font-size: 70px;
+
+    opacity: 0.3;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    color: #222;
+
+    box-shadow:
+        0 3px 15px rgba(0,0,0,0.06);
+
+    transition: 0.3s;
+}
+
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
+}
+
+
+.card i {
+
+    font-size: 35px;
+
+    color: #2563eb;
+
+    margin-bottom: 15px;
+}
+
+
+.card h3 {
+
+    margin-bottom: 8px;
+}
+
+
+.card p {
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   MOBILE TOGGLE
+========================= */
+
+.menu-toggle {
+
+    display: none;
+
+    position: fixed;
+
+    top: 15px;
+
+    left: 15px;
+
+    width: 45px;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    z-index: 1100;
+}
+
+
+/* Overlay */
+
+.overlay {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.5);
+
+    z-index: 900;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .cards {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    /* Sidebar hidden */
+
+    .sidebar {
+
+        transform: translateX(-100%);
+
+        width: 280px;
+    }
+
+
+    /* Sidebar visible */
+
+    .sidebar.active {
+
+        transform: translateX(0);
+    }
+
+
+    /* Show toggle */
+
+    .menu-toggle {
+
+        display: block;
+    }
+
+
+    /* Show close button */
+
+    .close-btn {
+
+        display: block;
+    }
+
+
+    /* Main */
+
+    .main-content {
+
+        margin-left: 0;
+
+        padding: 80px 15px 25px;
+    }
+
+
+    /* Overlay */
+
+    .overlay.active {
+
+        display: block;
+    }
+
+
+    /* Cards */
+
+    .cards {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .welcome-card {
+
+        padding: 22px;
+    }
+
+
+    .welcome-card > i {
+
+        display: none;
+    }
+
+
+    .top-header h1 {
+
+        font-size: 23px;
+    }
+
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- Mobile Toggle Button -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+
+    <!-- Overlay for Mobile -->
+    <div class="overlay" id="overlay"></div>
+
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Sidebar Header -->
+        <div class="sidebar-header">
+
+            <div class="logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Student Hub</span>
+            </div>
+
+            <!-- Close Button -->
+            <button class="close-btn" id="closeBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <!-- Dashboard -->
+        <ul class="menu">
+
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+
+            <!-- ================= Academic Calender ================= -->
+
+            <li class="menu-title">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Academic Calender</span>
+            </li>
+
+            <!-- Semester Calender -->
+            <li class="dropdown">
+
+                <button class="dropdown-btn">
+                    <span>
+                        <i class="fa-solid fa-book"></i>
+                        Course Calender
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </button>
+
+                <ul class="submenu">
+
+                    <li>
+                        <a href="#">
+                            Master
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Degree
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Diploma
+                        </a>
+                    </li>
+                </ul>    
+
+            
+            <!-- ================= Master ================= -->
+
+            <li class="menu-title">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Master</span>
+            </li>
+
+
+            <!-- M.E. -->
+            <li class="dropdown">
+
+                <button class="dropdown-btn">
+                    <span>
+                        <i class="fa-solid fa-book"></i>
+                        M.E. / M.Tech
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </button>
+
+
+                <ul class="submenu">
+
+                    <li>
+                        <a href="./master1.html">
+                            Semester 1
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./master2.html">
+                            Semester 2
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./master3.html">
+                            Semester 3
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./master4.html">
+                            Semester 4
+                        </a>
+                    </li>
+                </ul>
+
+
+            <!-- ================= DEGREE ================= -->
+
+            <li class="menu-title">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>Degree</span>
+            </li>
+
+
+            <!-- B.E. -->
+            <li class="dropdown">
+
+                <button class="dropdown-btn">
+                    <span>
+                        <i class="fa-solid fa-book"></i>
+                        B.E. / B.Tech
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </button>
+
+
+                <ul class="submenu">
+
+                    <li>
+                        <a href="./sem1.html">
+                            Semester 1
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem2.html">
+                            Semester 2
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem3.html">
+                            Semester 3
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem4.html">
+                            Semester 4
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem5.html">
+                            Semester 5
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem6.html">
+                            Semester 6
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem7.html">
+                            Semester 7
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem8.html">
+                            Semester 8
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+               
+            <!-- ================= DIPLOMA ================= -->
+
+            <li class="menu-title">
+
+                <i class="fa-solid fa-school"></i>
+
+                <span>Diploma</span>
+
+            </li>
+            
+
+            <!-- Diploma Computer -->
+            <li class="dropdown">
+
+                <button class="dropdown-btn">
+
+                    <span>
+                        <i class="fa-solid fa-computer"></i>
+                        Diploma Computer
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+
+                </button>
+
+
+                <ul class="submenu">
+
+                    <li>
+                        <a href="./sem1dip.html">
+                            Semester 1
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem2dip.html">
+                            Semester 2
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem3dip.html">
+                            Semester 3
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem4dip.html">
+                            Semester 4
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem5dip.html">
+                            Semester 5
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sem6dip.html">
+                            Semester 6
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+        </ul>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <div>
+                <h1>Student Dashboard</h1>
+
+                <p>
+                    Select your degree, diploma and semester.
+                </p>
+            </div>
+
+        </header>
+
+
+        <section class="dashboard">
+
+            <div class="welcome-card">
+
+                <div>
+                    <h2>Welcome to Student Hub 👋</h2>
+
+                    <p>
+                        Access your semester pages, notes,
+                        subjects and study material from the menu.
+                    </p>
+                </div>
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+
+            <div class="cards">
+
+                <a href="./master4.html" class="card">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h3>Master</h3>
+
+                    <p>
+                        4th Semester (Master)
+                    </p>
+
+                </a>
+
+                
+                <a href="./master3.html" class="card">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h3>Master</h3>
+
+                    <p>
+                        3rd Semester (Master)
+                    </p>
+
+                </a>
+                
+                
+                <a href="./master2.html" class="card">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h3>Master</h3>
+
+                    <p>
+                        2nd Semester (Master)
+                    </p>
+
+                </a>
+
+                
+                <a href="./master1.html" class="card">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h3>Master</h3>
+
+                    <p>
+                        1st Semester (Master)
+                    </p>
+
+                </a>
+
+
+
+                <a href="./sem8.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        8th Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem7.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        7th Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem6.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        6th Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem5.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        5th Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem4.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        4th Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem3.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        3rd Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem2.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        2nd Semester (Degree)
+                    </p>
+
+                </a>
+
+                <a href="./sem1.html" class="card">
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <h3>Degree</h3>
+
+                    <p>
+                        1st Semester (Degree)
+                    </p>
+
+                </a>
+
+
+                <a href="./sem6dip.html" class="card">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    <h3>Diploma</h3>
+
+                    <p>
+                        6th semester (diploma)
+                    </p>
+
+                </a>
+
+                <a href="./sem5dip.html" class="card">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    <h3>Diploma</h3>
+
+                    <p>
+                        5th semester (diploma)
+                    </p>
+
+                </a>
+
+                <a href="./sem4dip.html" class="card">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    <h3>Diploma</h3>
+
+                    <p>
+                        4th semester (diploma)
+                    </p>
+
+                </a>
+
+                <a href="./sem3dip.html" class="card">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    <h3>Diploma</h3>
+
+                    <p>
+                        3rd semester (diploma)
+                    </p>
+
+                </a>
+
+                <a href="./sem2dip.html" class="card">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    <h3>Diploma</h3>
+
+                    <p>
+                        2nd semester (diploma)
+                    </p>
+
+                </a>
+
+                <a href="./sem1dip.html" class="card">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    <h3>Diploma</h3>
+
+                    <p>
+                        1st semester (diploma)
+                    </p>
+
+                </a>
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+const closeBtn = document.getElementById("closeBtn");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+
+
+// Open Sidebar
+menuToggle.addEventListener("click", function () {
+
+    sidebar.classList.add("active");
+
+    overlay.classList.add("active");
+
+});
+
+
+// Close Sidebar
+closeBtn.addEventListener("click", function () {
+
+    sidebar.classList.remove("active");
+
+    overlay.classList.remove("active");
+
+});
+
+
+// Close Sidebar when clicking overlay
+overlay.addEventListener("click", function () {
+
+    sidebar.classList.remove("active");
+
+    overlay.classList.remove("active");
+
+});
+
+
+// ===============================
+// Dropdown Menu
+// ===============================
+
+const dropdownButtons =
+    document.querySelectorAll(".dropdown-btn");
+
+
+dropdownButtons.forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        const dropdown =
+            this.parentElement;
+
+
+        // Close other dropdowns
+        document
+            .querySelectorAll(".dropdown")
+            .forEach(function(item) {
+
+                if (item !== dropdown) {
+
+                    item.classList.remove("active");
+
+                }
+
+            });
+
+
+        // Toggle current dropdown
+        dropdown.classList.toggle("active");
+
+    });
+
+});
+
+
+// Close mobile sidebar after clicking a link
+
+const sidebarLinks =
+    document.querySelectorAll(".sidebar a");
+
+
+sidebarLinks.forEach(function(link) {
+
+    link.addEventListener("click", function() {
+
+        if (window.innerWidth <= 768) {
+
+            sidebar.classList.remove("active");
+
+            overlay.classList.remove("active");
+
+        }
+
+    });
+
+});
+    </script>
+
+</body>
+</html>
