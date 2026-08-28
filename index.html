@@ -1,267 +1,332 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CE DEPT STUDY MATERIAL</title>
+    <title>CE DEPT STUDY MATERIAL | Swaminarayan University</title>
+    <meta name="description" content="Semester-wise study materials, notes, question banks, and resources for Computer Engineering students at Swaminarayan University.">
     <link rel="icon" href="https://tse2.mm.bing.net/th/id/OIP.UN4baS4QfjtUDkm42MjJowHaFj?r=0&pid=Api&P=0&h=180">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-        <header class="head">
-            <div class="header-brand">
-                <img src="https://tse1.mm.bing.net/th/id/OIP.F-dtCUHjw6vCQE8q6ucgEAHaCs?r=0&pid=Api&P=0&h=180" alt="logo" class="image">
-                <h2 class="heading">CE DPET STUDY MATERIAL</h2>
-            </div>
-            <div class="header-search">
-                <input id="subjectSearchInput" type="text" placeholder="Search by subject name or code" aria-label="Search by subject name or code">
-                <button type="button" class="search-btn" onclick="filterSubjectRows()">Search</button>
-            </div>
-            <div class="togglemenu"><a href="./sidebar.html"> <i class="fa-solid fa-bars"></i></a></div>
-        </header>
+    <header class="head">
+        <div class="header-brand">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.F-dtCUHjw6vCQE8q6ucgEAHaCs?r=0&pid=Api&P=0&h=180" alt="Swaminarayan University Logo" class="image">
+            <h2 class="heading">CE DEPT STUDY MATERIAL</h2>
+        </div>
+        <div class="header-search">
+            <input id="subjectSearchInput" type="text" placeholder="Search semester..." aria-label="Search semester">
+            <button type="button" class="search-btn" onclick="filterSemCards()">Search</button>
+        </div>
+        <div class="togglemenu"><a href="./sidebar.html" aria-label="Open menu"><i class="fa-solid fa-bars"></i></a></div>
+    </header>
 
-        <main class="container">
-            <div class="container1">
-                <h1 class="font">Swamianrayan University</h1>
-                <h2>FACULTY OF ENGINEERING</h2>
-                <h3>COMPUTER ENGINEERING</h3>
-                <h1>STUDY MATERIAL</h1>
-            </div>
-
-
-            <div class="container2">
-                <table>
-                    <tr>
-                        <th>S No.</th>
-                        <th>Semester</th>
-                        <th>Link of Semester</th>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">1.</td>
-                        <td data-label="Semester">4th Master (CE)</td>
-                        <td data-label="Link of Semester"><a href="./master4.html">4th Sem</a></td>
-                    </tr>
-                     <tr>
-                        <td data-label="S No.">2.</td>
-                        <td data-label="Semester">3rd Master (CE)</td>
-                        <td data-label="Link of Semester"><a href="./master3.html">3rd Sem</a></td>
-                    </tr>
-                     <tr>
-                        <td data-label="S No.">3.</td>
-                        <td data-label="Semester">2nd Master (CE)</td>
-                        <td data-label="Link of Semester"><a href="./master2.html">2nd Sem</a></td>
-                    </tr>
-                     <tr>
-                        <td data-label="S No.">4.</td>
-                        <td data-label="Semester">1st Master (CE)</td>
-                        <td data-label="Link of Semester"><a href="./master1.html">1st Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">5.</td>
-                        <td data-label="Semester">8th Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem8.html">8th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">6.</td>
-                        <td data-label="Semester">7th Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem7.html">7th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">7.</td>
-                        <td data-label="Semester">6th Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem6.html">6th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">8.</td>
-                        <td data-label="Semester">5th Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem5.html">5th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">9.</td>
-                        <td data-label="Semester">4th Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem4.html">4th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">10.</td>
-                        <td data-label="Semester">3rd Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem3.html">3rd Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">11.</td>
-                        <td data-label="Semester">2nd Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem2.html">2nd Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">12.</td>
-                        <td data-label="Semester">1st Degree (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem1.html">1st Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">13.</td>
-                        <td data-label="Semester">6th Diploma (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem6dip.html">6th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">14.</td>
-                        <td data-label="Semester">5th Diploma (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem5dip.html">5th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">15.</td>
-                        <td data-label="Semester">4th Diploma (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem4dip.html">4th Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">16.</td>
-                        <td data-label="Semester">3rd Diploma (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem3dip.html">3rd Sem</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S No.">17.</td>
-                        <td data-label="Semester">2nd Diploma (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem2dip.html">2nd Sem</a></td>
-                    </tr>
-
-                    <tr>
-                        <td data-label="S No.">18.</td>
-                        <td data-label="Semester">1st Diploma (CE)</td>
-                        <td data-label="Link of Semester"><a href="./sem1dip.html">1st Sem</a></td>
-                    </tr>
-                </table>
-            </div>
-        </main>
-
-        <!-- =========================
-     FOOTER
-========================= -->
-
-<footer class="site-footer">
-
-    <div class="footer-container">
-
-        <!-- Brand Section -->
-        <div class="footer-brand">
-            <div class="footer-logo">
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-
-            <h2>Student Hub</h2>
-
-            <p>
-                Your one-stop platform for semester-wise study
-                materials, notes, previous year papers and
-                academic resources.
-            </p>
+    <main>
+        <!-- ===================== HERO ===================== -->
+        <div class="container1">
+            <h1 class="font">Swaminarayan University</h1>
+            <h2>FACULTY OF ENGINEERING</h2>
+            <h3>DEPARTMENT OF COMPUTER ENGINEERING</h3>
+            <h1>STUDY MATERIAL</h1>
         </div>
 
+        <!-- ===================== SEMESTER GRID ===================== -->
+        <section class="prog-section-wrapper">
 
-        <!-- Quick Links -->
-        <div class="footer-section">
-            <h3>Quick Links</h3>
+            <!-- ── Master (M.E.) ─────────────────────────── -->
+            <div class="prog-section" data-prog="master">
+                <div class="prog-section-header">
+                    <div class="prog-badge master-badge">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        M.E. / Master
+                    </div>
+                    <h2 class="prog-title">Master of Engineering <span>(CE)</span></h2>
+                    <p class="prog-desc">Postgraduate programme — 4 semesters</p>
+                </div>
 
-            <ul>
-                <li>
-                    <a href="index.html">
-                        <i class="fa-solid fa-house"></i>
-                        Home
+                <div class="sem-card-grid">
+                    <a href="./master1.html" class="sem-card" data-search="1st master me">
+                        <div class="sem-card-num">1</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">1st Semester</span>
+                            <span class="sem-card-tag">M.E.</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
                     </a>
-                </li>
+                    <a href="./master2.html" class="sem-card" data-search="2nd master me">
+                        <div class="sem-card-num">2</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">2nd Semester</span>
+                            <span class="sem-card-tag">M.E.</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./master3.html" class="sem-card" data-search="3rd master me">
+                        <div class="sem-card-num">3</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">3rd Semester</span>
+                            <span class="sem-card-tag">M.E.</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./master4.html" class="sem-card" data-search="4th master me">
+                        <div class="sem-card-num">4</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">4th Semester</span>
+                            <span class="sem-card-tag">M.E.</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                </div>
+            </div>
 
-
-                
-            </ul>
-        </div>
-
-
-        <!-- Academic Links -->
-        <div class="footer-section">
-            <h3>Academics</h3>
-
-            <ul>
-                <li>
-                    <a href="./sidebar.html">
+            <!-- ── Degree (B.E.) ──────────────────────────── -->
+            <div class="prog-section" data-prog="degree">
+                <div class="prog-section-header">
+                    <div class="prog-badge degree-badge">
                         <i class="fa-solid fa-book-open"></i>
-                        M.E. / M.Tech
-                    </a>
-                </li>
-                <li>
-                    <a href="./sidebar.html">
-                        <i class="fa-solid fa-book-open"></i>
-                        B.E. / B.Tech
-                    </a>
-                </li>
+                        B.E. / Degree
+                    </div>
+                    <h2 class="prog-title">Bachelor of Engineering <span>(CE)</span></h2>
+                    <p class="prog-desc">Undergraduate programme — 8 semesters</p>
+                </div>
 
-                <li>
-                    <a href="./sidebar.html">
+                <div class="sem-card-grid">
+                    <a href="./sem1.html" class="sem-card" data-search="1st degree be bachelor">
+                        <div class="sem-card-num">1</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">1st Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem2.html" class="sem-card" data-search="2nd degree be bachelor">
+                        <div class="sem-card-num">2</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">2nd Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem3.html" class="sem-card" data-search="3rd degree be bachelor">
+                        <div class="sem-card-num">3</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">3rd Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem4.html" class="sem-card" data-search="4th degree be bachelor">
+                        <div class="sem-card-num">4</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">4th Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem5.html" class="sem-card" data-search="5th degree be bachelor">
+                        <div class="sem-card-num">5</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">5th Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem6.html" class="sem-card" data-search="6th degree be bachelor">
+                        <div class="sem-card-num">6</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">6th Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem7.html" class="sem-card" data-search="7th degree be bachelor">
+                        <div class="sem-card-num">7</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">7th Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem8.html" class="sem-card" data-search="8th degree be bachelor">
+                        <div class="sem-card-num">8</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">8th Semester</span>
+                            <span class="sem-card-tag">Degree</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ── Diploma ─────────────────────────────────── -->
+            <div class="prog-section" data-prog="diploma">
+                <div class="prog-section-header">
+                    <div class="prog-badge diploma-badge">
                         <i class="fa-solid fa-laptop-code"></i>
                         Diploma
+                    </div>
+                    <h2 class="prog-title">Diploma in Engineering <span>(CE)</span></h2>
+                    <p class="prog-desc">Technical diploma programme — 6 semesters</p>
+                </div>
+
+                <div class="sem-card-grid">
+                    <a href="./sem1dip.html" class="sem-card" data-search="1st diploma dip">
+                        <div class="sem-card-num">1</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">1st Semester</span>
+                            <span class="sem-card-tag">Diploma</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
                     </a>
-                </li>
+                    <a href="./sem2dip.html" class="sem-card" data-search="2nd diploma dip">
+                        <div class="sem-card-num">2</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">2nd Semester</span>
+                            <span class="sem-card-tag">Diploma</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem3dip.html" class="sem-card" data-search="3rd diploma dip">
+                        <div class="sem-card-num">3</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">3rd Semester</span>
+                            <span class="sem-card-tag">Diploma</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem4dip.html" class="sem-card" data-search="4th diploma dip">
+                        <div class="sem-card-num">4</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">4th Semester</span>
+                            <span class="sem-card-tag">Diploma</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem5dip.html" class="sem-card" data-search="5th diploma dip">
+                        <div class="sem-card-num">5</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">5th Semester</span>
+                            <span class="sem-card-tag">Diploma</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                    <a href="./sem6dip.html" class="sem-card" data-search="6th diploma dip">
+                        <div class="sem-card-num">6</div>
+                        <div class="sem-card-body">
+                            <span class="sem-card-label">6th Semester</span>
+                            <span class="sem-card-tag">Diploma</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right sem-card-arrow"></i>
+                    </a>
+                </div>
+            </div>
 
-               
-            </ul>
-        </div>
-
-
-        <!-- Social / Contact -->
-        <div class="footer-section footer-connect">
-
-            <h3>Connect With Us</h3>
-
-            <p>
-                Follow and stay connected for upcoming
-                academic resources and updates.
+            <!-- No-result message -->
+            <p id="homeNoResult" class="home-no-result" style="display:none;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                No semesters found. Try a different keyword.
             </p>
 
+        </section>
+    </main>
+
+    <!-- ========================= FOOTER ========================= -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!-- Brand Section -->
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h2>Student Hub</h2>
+                <p>Your one-stop platform for semester-wise study materials, notes, previous year papers and academic resources.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            Home
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Academic Links -->
+            <div class="footer-section">
+                <h3>Academics</h3>
+                <ul>
+                    <li>
+                        <a href="./sidebar.html#master">
+                            <i class="fa-solid fa-book-open"></i>
+                            M.E. / M.Tech
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./sidebar.html#degree">
+                            <i class="fa-solid fa-book-open"></i>
+                            B.E. / B.Tech
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./sidebar.html#diploma">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            Diploma
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Connect -->
+            <div class="footer-section footer-connect">
+                <h3>Connect With Us</h3>
+                <p>Follow and stay connected for upcoming academic resources and updates.</p>
+            </div>
         </div>
 
-    </div>
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-line"></div>
+            <p>© 2026 <strong>Kartik Agrawal</strong>. All Rights Reserved.</p>
+            <p class="footer-made">Made with <span>♥</span> by <strong>Kartik Agrawal</strong></p>
+        </div>
+    </footer>
 
+    <script>
+        /* ── Search / filter semester cards ── */
+        function filterSemCards() {
+            var query = (document.getElementById('subjectSearchInput').value || '').trim().toLowerCase();
+            var cards = document.querySelectorAll('.sem-card');
+            var sections = document.querySelectorAll('.prog-section');
+            var noResult = document.getElementById('homeNoResult');
+            var totalVisible = 0;
 
-    <!-- Footer Bottom -->
-
-    <div class="footer-bottom">
-
-        <div class="footer-line"></div>
-
-        <p>
-            © 2026 <strong>Kartik Agrawal</strong>.
-            All Rights Reserved.
-        </p>
-
-        <p class="footer-made">
-            Made with <span>♥</span> by
-            <strong>Kartik Agrawal</strong>
-        </p>
-
-    </div>
-
-</footer>
-
-        <script>
-            function filterSubjectRows() {
-                const input = document.getElementById('subjectSearchInput');
-                if (!input) return;
-
-                const query = input.value.trim().toLowerCase();
-                const rows = document.querySelectorAll('.container2 table tr:not(:first-child)');
-
-                rows.forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(query) || query === '' ? '' : 'none';
+            sections.forEach(function (section) {
+                var sectionVisible = 0;
+                section.querySelectorAll('.sem-card').forEach(function (card) {
+                    var text = (card.getAttribute('data-search') || '') + ' ' + card.textContent;
+                    var match = !query || text.toLowerCase().includes(query);
+                    card.style.display = match ? '' : 'none';
+                    if (match) { sectionVisible++; totalVisible++; }
                 });
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const input = document.getElementById('subjectSearchInput');
-                if (!input) return;
-
-                input.addEventListener('input', filterSubjectRows);
+                section.style.display = sectionVisible === 0 ? 'none' : '';
             });
-        </script>
 
+            noResult.style.display = totalVisible === 0 ? 'block' : 'none';
+        }
 
-
+        document.addEventListener('DOMContentLoaded', function () {
+            var input = document.getElementById('subjectSearchInput');
+            if (input) input.addEventListener('input', filterSemCards);
+        });
+    </script>
 </body>
 </html>

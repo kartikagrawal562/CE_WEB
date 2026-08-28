@@ -3,1270 +3,1562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Student Dashboard</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <title>Student Dashboard | CE Dept Study Material</title>
+    <meta name="description" content="Navigate all semesters, subjects and study materials for B.E., Diploma and M.E. Computer Engineering.">
+    <link rel="icon" href="https://tse2.mm.bing.net/th/id/OIP.UN4baS4QfjtUDkm42MjJowHaFj?r=0&pid=Api&P=0&h=180">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* =========================
-   RESET
-========================= */
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --sidebar-w: 310px;
+    --bg: #f1f5f9;
+    --sidebar-bg: #0f172a;
+    --sidebar-border: rgba(255,255,255,0.07);
+    --accent: #f7c948;
+    --accent-dim: rgba(247,201,72,0.12);
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --white: #ffffff;
+    --radius: 14px;
+    --trans: 0.25s ease;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7fb;
-    color: #222;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-
-/* =========================
+/* ============================================================
    SIDEBAR
-========================= */
-
+============================================================ */
 .sidebar {
     position: fixed;
-
-    left: 0;
-    top: 0;
-
-    width: 280px;
+    left: 0; top: 0;
+    width: var(--sidebar-w);
     height: 100vh;
-
-    background: #111827;
-
-    color: white;
-
-    overflow-y: auto;
-
+    background: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
     z-index: 1000;
-
-    transition: 0.3s ease;
+    transition: transform var(--trans);
+    overflow: hidden;
 }
 
-
-/* Sidebar Header */
-
+/* Header */
 .sidebar-header {
-
-    height: 70px;
-
+    flex-shrink: 0;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--sidebar-border);
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    padding: 0 20px;
-
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: linear-gradient(135deg, #1b102d 0%, #0f172a 100%);
 }
 
-
-.logo {
-
+.sb-logo {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
-    font-size: 20px;
-
-    font-weight: bold;
 }
 
-
-.logo i {
-    font-size: 25px;
+.sb-logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent), #d99b1d);
+    color: #1b102d;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(247,201,72,0.3);
 }
 
-
-/* Close Button */
+.sb-logo-text { color: #fff; }
+.sb-logo-text strong { display: block; font-size: 15px; font-weight: 800; }
+.sb-logo-text span { font-size: 11px; color: rgba(255,255,255,0.5); }
 
 .close-btn {
-
     display: none;
-
-    border: none;
-
-    background: transparent;
-
-    color: white;
-
-    font-size: 22px;
-
+    width: 34px; height: 34px;
+    background: rgba(255,255,255,0.08);
+    border: none; border-radius: 8px;
+    color: #fff; font-size: 16px;
     cursor: pointer;
+    align-items: center; justify-content: center;
+    transition: background var(--trans);
+}
+.close-btn:hover { background: rgba(255,255,255,0.16); }
+
+/* Search inside sidebar */
+.sb-search {
+    flex-shrink: 0;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--sidebar-border);
 }
 
-
-/* =========================
-   MENU
-========================= */
-
-.menu {
-
-    list-style: none;
-
-    padding: 15px 10px;
-}
-
-
-.menu li {
-    margin-bottom: 5px;
-}
-
-
-.menu a {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 13px 15px;
-
-    color: #d1d5db;
-
-    text-decoration: none;
-
+.sb-search input {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
-
-    transition: 0.2s;
-}
-
-
-.menu a:hover {
-
-    background: #2563eb;
-
-    color: white;
-}
-
-
-.menu a i {
-    width: 20px;
-}
-
-
-/* =========================
-   MENU TITLE
-========================= */
-
-.menu-title {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 18px 15px 8px;
-
-    color: #60a5fa;
-
+    padding: 9px 12px 9px 36px;
+    color: #fff;
     font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--trans), background var(--trans);
+}
+.sb-search input::placeholder { color: rgba(255,255,255,0.35); }
+.sb-search input:focus { border-color: var(--accent); background: rgba(247,201,72,0.06); }
+.sb-search-wrap { position: relative; }
+.sb-search-wrap i {
+    position: absolute; left: 11px; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    pointer-events: none;
+}
 
-    font-weight: bold;
+/* Nav scroll area */
+.sb-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 10px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.sb-nav::-webkit-scrollbar { width: 4px; }
+.sb-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
 
+/* Home link */
+.sb-home-link {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 13px;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    transition: background var(--trans), color var(--trans);
+}
+.sb-home-link i { width: 18px; text-align: center; font-size: 15px; }
+.sb-home-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+/* Section label */
+.sb-section-label {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 13px 6px;
+    color: var(--accent);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
+.sb-section-label i { font-size: 11px; }
 
+/* Course accordion (Level 1 — B.E., M.E., Diploma) */
+.course-item { margin-bottom: 2px; }
 
-/* =========================
-   DROPDOWN BUTTON
-========================= */
-
-.dropdown-btn {
-
+.course-btn {
     width: 100%;
-
-    border: none;
-
     background: transparent;
-
-    color: #d1d5db;
-
-    padding: 13px 15px;
-
-    border-radius: 8px;
-
+    border: none;
+    color: rgba(255,255,255,0.8);
+    padding: 10px 13px;
+    border-radius: 9px;
+    font-size: 13.5px;
+    font-weight: 700;
     cursor: pointer;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    font-size: 15px;
-
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+    transition: background var(--trans), color var(--trans);
+    font-family: inherit;
     text-align: left;
 }
-
-
-.dropdown-btn:hover {
-
-    background: #2563eb;
-
-    color: white;
+.course-btn-left { display: flex; align-items: center; gap: 10px; }
+.course-btn-icon {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    transition: background var(--trans);
 }
+.course-btn:hover { background: rgba(255,255,255,0.07); color: #fff; }
+.course-btn:hover .course-btn-icon { background: rgba(247,201,72,0.18); }
+.course-item.open > .course-btn { background: var(--accent-dim); color: var(--accent); }
+.course-item.open > .course-btn .course-btn-icon { background: rgba(247,201,72,0.22); color: var(--accent); }
+.course-arrow { font-size: 11px; transition: transform var(--trans); flex-shrink: 0; color: rgba(255,255,255,0.35); }
+.course-item.open > .course-btn .course-arrow { transform: rotate(180deg); color: var(--accent); }
 
-
-.dropdown-btn span {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-}
-
-
-/* Arrow */
-
-.arrow {
-
-    transition: 0.3s;
-}
-
-
-/* Rotate arrow */
-
-.dropdown.active .arrow {
-
-    transform: rotate(180deg);
-}
-
-
-/* =========================
-   SUBMENU
-========================= */
-
-.submenu {
-
+/* Semester list (Level 2) */
+.sem-list {
     list-style: none;
-
     max-height: 0;
-
     overflow: hidden;
-
-    transition: max-height 0.3s ease;
-
-    padding-left: 20px;
+    transition: max-height 0.35s ease;
+    padding-left: 10px;
 }
+.course-item.open > .sem-list { max-height: 2000px; }
 
+/* Semester item (Level 2) */
+.sem-item { margin: 2px 0; }
 
-.dropdown.active .submenu {
-
-    max-height: 500px;
-}
-
-
-.submenu li {
-    margin: 2px 0;
-}
-
-
-.submenu a {
-
-    padding: 10px 15px;
-
-    font-size: 14px;
-
-    border-left: 2px solid #374151;
-
-    border-radius: 0 6px 6px 0;
-}
-
-
-.submenu a:hover {
-
-    border-left: 2px solid #60a5fa;
-
-    background: #1e3a8a;
-}
-
-
-/* =========================
-   MAIN CONTENT
-========================= */
-
-.main-content {
-
-    margin-left: 280px;
-
-    min-height: 100vh;
-
-    padding: 30px;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.top-header {
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    box-shadow: 0 3px 15px rgba(0,0,0,0.06);
-
-    margin-bottom: 25px;
-}
-
-
-.top-header h1 {
-
-    font-size: 28px;
-
-    margin-bottom: 8px;
-}
-
-
-.top-header p {
-
-    color: #6b7280;
-}
-
-
-/* =========================
-   WELCOME CARD
-========================= */
-
-.welcome-card {
-
-    background: linear-gradient(
-        135deg,
-        #2563eb,
-        #1d4ed8
-    );
-
-    color: white;
-
-    padding: 30px;
-
-    border-radius: 15px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 25px;
-}
-
-
-.welcome-card h2 {
-
-    margin-bottom: 10px;
-
-    font-size: 24px;
-}
-
-
-.welcome-card p {
-
-    color: #dbeafe;
-
-    max-width: 600px;
-
-    line-height: 1.6;
-}
-
-
-.welcome-card > i {
-
-    font-size: 70px;
-
-    opacity: 0.3;
-}
-
-
-/* =========================
-   CARDS
-========================= */
-
-.cards {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-}
-
-
-.card {
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    text-decoration: none;
-
-    color: #222;
-
-    box-shadow:
-        0 3px 15px rgba(0,0,0,0.06);
-
-    transition: 0.3s;
-}
-
-
-.card:hover {
-
-    transform: translateY(-5px);
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.12);
-}
-
-
-.card i {
-
-    font-size: 35px;
-
-    color: #2563eb;
-
-    margin-bottom: 15px;
-}
-
-
-.card h3 {
-
-    margin-bottom: 8px;
-}
-
-
-.card p {
-
-    color: #6b7280;
-
-    font-size: 14px;
-}
-
-
-/* =========================
-   MOBILE TOGGLE
-========================= */
-
-.menu-toggle {
-
-    display: none;
-
-    position: fixed;
-
-    top: 15px;
-
-    left: 15px;
-
-    width: 45px;
-
-    height: 45px;
-
+.sem-btn {
+    width: 100%;
+    background: transparent;
     border: none;
-
-    border-radius: 8px;
-
-    background: #2563eb;
-
-    color: white;
-
-    font-size: 20px;
-
+    color: rgba(255,255,255,0.6);
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px;
+    transition: background var(--trans), color var(--trans);
+    font-family: inherit;
+    text-align: left;
+    border-left: 2px solid rgba(255,255,255,0.1);
+}
+.sem-btn-left { display: flex; align-items: center; gap: 8px; }
+.sem-badge {
+    width: 22px; height: 22px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background var(--trans);
+}
+.sem-btn:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); border-left-color: rgba(255,255,255,0.25); }
+.sem-item.open > .sem-btn { background: rgba(37,99,235,0.15); color: #93c5fd; border-left-color: var(--blue); }
+.sem-item.open > .sem-btn .sem-badge { background: rgba(37,99,235,0.3); }
+.sem-arrow { font-size: 10px; transition: transform var(--trans); flex-shrink: 0; color: rgba(255,255,255,0.25); }
+.sem-item.open > .sem-btn .sem-arrow { transform: rotate(180deg); color: #93c5fd; }
 
-    z-index: 1100;
+/* Subject list (Level 3) */
+.subj-list {
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 12px;
+}
+.sem-item.open > .subj-list { max-height: 1000px; }
+
+/* Subject link (Level 3) — clicking shows the card */
+.subj-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 11px;
+    color: rgba(255,255,255,0.5);
+    font-size: 12.5px;
+    font-weight: 500;
+    border-radius: 6px;
+    border-left: 2px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: background var(--trans), color var(--trans), border-color var(--trans);
+    margin: 1px 0;
+    user-select: none;
+}
+.subj-link:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.8); border-left-color: rgba(255,255,255,0.2); }
+.subj-link.active { background: rgba(124,58,237,0.18); color: #c4b5fd; border-left-color: var(--purple); font-weight: 600; }
+.subj-link i { font-size: 11px; flex-shrink: 0; }
+
+/* Hidden label for search filtering */
+.sb-no-result {
+    padding: 12px 13px;
+    color: rgba(255,255,255,0.35);
+    font-size: 12px;
+    text-align: center;
+    display: none;
 }
 
+/* ============================================================
+   MAIN CONTENT
+============================================================ */
+.main-content {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+    padding: 30px;
+    transition: margin-left var(--trans);
+}
 
-/* Overlay */
+/* Top bar */
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.page-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    flex: 1;
+    flex-wrap: wrap;
+}
+.page-breadcrumb a { color: var(--blue); text-decoration: none; font-weight: 600; }
+.page-breadcrumb a:hover { text-decoration: underline; }
+.page-breadcrumb .sep { color: #cbd5e1; }
+.page-breadcrumb .current { color: var(--text-main); font-weight: 700; }
+
+/* Welcome hero */
+.welcome-hero {
+    background: linear-gradient(135deg, #1b102d 0%, #2f1a46 50%, #1e3a8a 100%);
+    border-radius: 20px;
+    padding: 36px 40px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.welcome-hero::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(247,201,72,0.05);
+    top: -100px; right: -80px;
+}
+.welcome-hero h1 { font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 800; margin-bottom: 10px; }
+.welcome-hero p { color: rgba(255,255,255,0.68); line-height: 1.65; max-width: 560px; font-size: 0.95rem; }
+.welcome-hero-icon { font-size: 80px; opacity: 0.15; flex-shrink: 0; }
+
+/* Quick stats row */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+    border: 1.5px solid #e2e8f0;
+    transition: transform var(--trans), box-shadow var(--trans);
+    text-decoration: none;
+    color: var(--text-main);
+}
+.stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(15,23,42,0.1); }
+
+.stat-icon {
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+.stat-icon.purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; }
+.stat-icon.blue   { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; }
+.stat-icon.gold   { background: linear-gradient(135deg, #f7c948, #d99b1d); color: #1b102d; }
+
+.stat-info strong { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+.stat-info span { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
+
+/* ============================================================
+   COURSE SELECTION CARDS (Level 0 — Home)
+============================================================ */
+.course-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.course-card {
+    background: var(--white);
+    border-radius: 18px;
+    border: 1.5px solid #e2e8f0;
+    padding: 30px 20px 26px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+    transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans);
+    position: relative;
+    overflow: hidden;
+}
+.course-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 18px 18px 0 0;
+}
+.course-card.purple::before { background: linear-gradient(90deg, #7c3aed, #6d28d9); }
+.course-card.blue::before   { background: linear-gradient(90deg, #2563eb, #1d4ed8); }
+.course-card.gold::before   { background: linear-gradient(90deg, #f7c948, #d99b1d); }
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 36px rgba(15,23,42,0.12);
+    border-color: #c7d2fe;
+}
+.course-card-icon {
+    width: 62px; height: 62px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    margin: 0 auto 16px;
+}
+.course-card.purple .course-card-icon { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; }
+.course-card.blue   .course-card-icon { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; }
+.course-card.gold   .course-card-icon { background: linear-gradient(135deg, #f7c948, #d99b1d); color: #1b102d; }
+.course-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--text-main); }
+.course-card p  { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-bottom: 14px; }
+.course-card-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 13px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+    background: #f1f5f9;
+    color: var(--text-muted);
+}
+.course-card:hover .course-card-badge { background: #e0e7ff; color: var(--blue); }
+
+/* ── Semester Grid (Level 1) ── */
+#semGridPanel { display: none; }
+
+.sem-grid-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+}
+.sem-grid-title h2 { font-size: 1.2rem; font-weight: 800; }
+.sem-grid-title p  { font-size: 0.82rem; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+
+.back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #f1f5f9;
+    border: 1.5px solid #e2e8f0;
+    color: var(--text-main);
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 13.5px; font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--trans), border-color var(--trans), transform var(--trans);
+    flex-shrink: 0;
+}
+.back-btn:hover { background: #e0e7ff; border-color: #a5b4fc; transform: translateY(-1px); }
+
+.sem-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 16px;
+}
+
+.sem-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1.5px solid #e2e8f0;
+    padding: 22px 18px;
+    text-decoration: none;
+    color: var(--text-main);
+    box-shadow: 0 3px 12px rgba(15,23,42,0.06);
+    transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans);
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.sem-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    opacity: 0;
+    transition: opacity var(--trans);
+}
+.sem-card:hover { transform: translateY(-5px); box-shadow: 0 10px 28px rgba(15,23,42,0.1); border-color: #a5b4fc; }
+.sem-card:hover::after { opacity: 1; }
+.sem-num {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 800;
+    flex-shrink: 0;
+}
+.sem-card .sem-label { font-size: 0.92rem; font-weight: 700; }
+.sem-card .sem-sublabel { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+.sem-card.coming-soon { opacity: 0.65; pointer-events: none; }
+.sem-card .coming-tag {
+    font-size: 10.5px; font-weight: 700; color: #94a3b8;
+    background: #f1f5f9; padding: 2px 8px; border-radius: 99px;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 900px) { .course-cards-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .course-cards-grid { grid-template-columns: 1fr; } .sem-cards-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============================================================
+   MATERIAL VIEW PANEL
+============================================================ */
+#materialPanel { display: none; }
+#welcomePanel  { display: block; }
+
+.panel-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+}
+
+.back-to-sem-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff;
+    border: none; border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--trans), transform var(--trans), box-shadow var(--trans);
+    font-family: inherit;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+}
+.back-to-sem-btn:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(37,99,235,0.3); }
+
+.panel-title-group { flex: 1; }
+.panel-title-group h2 { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+.panel-title-group p  { font-size: 0.82rem; color: var(--text-muted); margin-top: 3px; font-weight: 600; letter-spacing: 0.04em; }
+
+/* Subject card (inline material view) */
+.inline-subject-card {
+    background: var(--white);
+    border-radius: 20px;
+    border: 1.5px solid #e2e8f0;
+    box-shadow: 0 6px 24px rgba(15,23,42,0.07);
+    overflow: hidden;
+}
+
+.inline-subject-header {
+    display: flex; align-items: center; gap: 18px;
+    padding: 22px 26px 20px;
+    background: linear-gradient(135deg, #1b102d 0%, #2f1a46 100%);
+    border-bottom: 2px solid var(--accent);
+}
+
+.inline-subject-num {
+    min-width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--accent), #d99b1d);
+    color: #1b102d;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(247,201,72,0.35);
+}
+
+.inline-subject-info h2 {
+    font-size: 1.05rem; font-weight: 800; color: var(--accent);
+    margin: 0 0 5px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.inline-subject-info p {
+    font-size: 0.82rem; color: rgba(255,255,255,0.6);
+    font-weight: 600; margin: 0; letter-spacing: 0.05em;
+}
+
+/* Material sections inside inline card */
+.inline-sections { padding: 4px 0 4px; }
+
+.inline-section {
+    padding: 18px 26px;
+    border-bottom: 1px solid #f0f4f8;
+}
+.inline-section:last-child { border-bottom: none; }
+
+.inline-section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88rem; font-weight: 700; color: var(--text-main);
+    text-transform: uppercase; letter-spacing: 0.07em;
+    margin-bottom: 12px;
+}
+.inline-section-title i {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+}
+
+.inline-file-list { display: flex; flex-direction: column; gap: 8px; }
+
+.inline-file-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 14px;
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 9px;
+    transition: background var(--trans), border-color var(--trans);
+}
+.inline-file-item:hover { background: #eef2ff; border-color: #a5b4fc; }
+
+.inline-file-name {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88rem; font-weight: 600; color: #334155;
+    min-width: 0; flex: 1;
+}
+.inline-file-name i { color: #ef4444; font-size: 1.1rem; flex-shrink: 0; }
+
+.inline-file-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.btn-view {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 13px; border-radius: 7px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    background: #eef4ff; color: var(--blue); border: 1px solid var(--blue);
+    transition: background var(--trans), color var(--trans), transform var(--trans);
+    white-space: nowrap;
+}
+.btn-view:hover { background: var(--blue); color: #fff; transform: translateY(-1px); }
+
+.btn-dl {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 13px; border-radius: 7px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    background: var(--blue); color: #fff; border: 1px solid var(--blue);
+    transition: background var(--trans), transform var(--trans);
+    white-space: nowrap;
+}
+.btn-dl:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+/* Empty state when subject has no links */
+.inline-empty {
+    text-align: center; padding: 30px 20px;
+    color: var(--text-muted); font-size: 0.88rem;
+}
+.inline-empty i { font-size: 2rem; display: block; margin-bottom: 10px; color: #cbd5e1; }
+
+/* ============================================================
+   MOBILE TOGGLE
+============================================================ */
+.menu-toggle {
+    display: none;
+    position: fixed; top: 14px; left: 14px;
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #1b102d, #2f1a46);
+    border: none; border-radius: 10px;
+    color: var(--accent); font-size: 19px;
+    cursor: pointer; z-index: 1100;
+    align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
 
 .overlay {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,0,0,0.5);
-
-    z-index: 900;
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55); z-index: 900;
+    backdrop-filter: blur(2px);
 }
 
-
-/* =========================
-   TABLET
-========================= */
-
+/* ============================================================
+   RESPONSIVE
+============================================================ */
 @media (max-width: 900px) {
-
-    .cards {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
+    .stats-row { grid-template-columns: 1fr 1fr; }
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .close-btn { display: flex; }
+    .menu-toggle { display: flex; }
+    .overlay.show { display: block; }
+    .main-content { margin-left: 0; padding: 75px 16px 30px; }
+    .welcome-hero { padding: 26px 22px; }
+    .welcome-hero-icon { display: none; }
+    .stats-row { grid-template-columns: 1fr; gap: 12px; }
+    .panel-header { flex-wrap: wrap; }
+}
 
-    /* Sidebar hidden */
-
-    .sidebar {
-
-        transform: translateX(-100%);
-
-        width: 280px;
-    }
-
-
-    /* Sidebar visible */
-
-    .sidebar.active {
-
-        transform: translateX(0);
-    }
-
-
-    /* Show toggle */
-
-    .menu-toggle {
-
-        display: block;
-    }
-
-
-    /* Show close button */
-
-    .close-btn {
-
-        display: block;
-    }
-
-
-    /* Main */
-
-    .main-content {
-
-        margin-left: 0;
-
-        padding: 80px 15px 25px;
-    }
-
-
-    /* Overlay */
-
-    .overlay.active {
-
-        display: block;
-    }
-
-
-    /* Cards */
-
-    .cards {
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .welcome-card {
-
-        padding: 22px;
-    }
-
-
-    .welcome-card > i {
-
-        display: none;
-    }
-
-
-    .top-header h1 {
-
-        font-size: 23px;
-    }
-
+@media (max-width: 480px) {
+    .inline-subject-header { padding: 16px 16px 14px; gap: 12px; }
+    .inline-section { padding: 14px 16px; }
+    .inline-file-item { flex-wrap: wrap; }
 }
     </style>
 </head>
-
 <body>
 
-    <!-- Mobile Toggle Button -->
-    <button class="menu-toggle" id="menuToggle">
-        <i class="fa-solid fa-bars"></i>
-    </button>
+<!-- Mobile Toggle -->
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+    <i class="fa-solid fa-bars"></i>
+</button>
 
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
 
-    <!-- Overlay for Mobile -->
-    <div class="overlay" id="overlay"></div>
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar" id="sidebar">
 
-
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-
-        <!-- Sidebar Header -->
-        <div class="sidebar-header">
-
-            <div class="logo">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span>Student Hub</span>
+    <!-- Header -->
+    <div class="sidebar-header">
+        <div class="sb-logo">
+            <div class="sb-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="sb-logo-text">
+                <strong>Student Hub</strong>
+                <span>CE Department</span>
             </div>
+        </div>
+        <button class="close-btn" id="closeBtn" aria-label="Close menu">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
 
-            <!-- Close Button -->
-            <button class="close-btn" id="closeBtn">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <!-- Search -->
+    <div class="sb-search">
+        <div class="sb-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="sbSearchInput" placeholder="Search subject..." autocomplete="off">
+        </div>
+    </div>
 
+    <!-- Nav -->
+    <nav class="sb-nav" id="sbNav">
+
+        <!-- Home -->
+        <a href="index.html" class="sb-home-link">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+
+        <!-- ── MASTER ────────────────────────── -->
+        <div class="sb-section-label">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Master
         </div>
 
+        <div class="course-item" id="course-master">
+            <button class="course-btn" onclick="toggleCourse('master')">
+                <span class="course-btn-left">
+                    <span class="course-btn-icon"><i class="fa-solid fa-book-open"></i></span>
+                    M.E. / M.Tech
+                </span>
+                <i class="fa-solid fa-chevron-down course-arrow"></i>
+            </button>
+            <ul class="sem-list" id="sem-list-master">
 
-        <!-- Dashboard -->
-        <ul class="menu">
-
-            <li>
-                <a href="index.html">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-
-            <!-- ================= Academic Calender ================= -->
-
-            <li class="menu-title">
-                <i class="fa-solid fa-calendar-days"></i>
-                <span>Academic Calender</span>
-            </li>
-
-            <!-- Semester Calender -->
-            <li class="dropdown">
-
-                <button class="dropdown-btn">
-                    <span>
-                        <i class="fa-solid fa-book"></i>
-                        Course Calender
-                    </span>
-
-                    <i class="fa-solid fa-chevron-down arrow"></i>
-                </button>
-
-                <ul class="submenu">
-
-                    <li>
-                        <a href="#">
-                            Master
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Degree
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Diploma
-                        </a>
-                    </li>
-                </ul>    
-
-            
-            <!-- ================= Master ================= -->
-
-            <li class="menu-title">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span>Master</span>
-            </li>
-
-
-            <!-- M.E. -->
-            <li class="dropdown">
-
-                <button class="dropdown-btn">
-                    <span>
-                        <i class="fa-solid fa-book"></i>
-                        M.E. / M.Tech
-                    </span>
-
-                    <i class="fa-solid fa-chevron-down arrow"></i>
-                </button>
-
-
-                <ul class="submenu">
-
-                    <li>
-                        <a href="./master1.html">
+                <!-- M.E. Sem 1 -->
+                <li class="sem-item" id="sem-master-1">
+                    <button class="sem-btn" onclick="toggleSem('master-1')">
+                        <span class="sem-btn-left">
+                            <span class="sem-badge">1</span>
                             Semester 1
-                        </a>
-                    </li>
+                        </span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('me1s1','TECHNICAL REPORT WRITING','ME200101',1,'master1.html')"><i class="fa-solid fa-circle-dot"></i>Technical Report Writing</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me1s2','MATHEMATICAL FOUNDATION OF COMPUTER SCIENCE','ME103105',2,'master1.html')"><i class="fa-solid fa-circle-dot"></i>Mathematical Foundation of CS</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me1s3','ADVANCED DATA STRUCTURE','ME103103',3,'master1.html')"><i class="fa-solid fa-circle-dot"></i>Advanced Data Structure</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me1s4','OPERATING SYSTEM DESIGN','ME103105',4,'master1.html')"><i class="fa-solid fa-circle-dot"></i>Operating System Design</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me1s5','DISTRIBUTED SYSTEM','ME103103',5,'master1.html')"><i class="fa-solid fa-circle-dot"></i>Distributed System</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./master2.html">
+                <!-- M.E. Sem 2 -->
+                <li class="sem-item" id="sem-master-2">
+                    <button class="sem-btn" onclick="toggleSem('master-2')">
+                        <span class="sem-btn-left">
+                            <span class="sem-badge">2</span>
                             Semester 2
-                        </a>
-                    </li>
+                        </span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('me2s1','ADVANCED ALGORITHMS','ME200201',1,'master2.html')"><i class="fa-solid fa-circle-dot"></i>Advanced Algorithms</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me2s2','SOFT COMPUTING','ME200202',2,'master2.html')"><i class="fa-solid fa-circle-dot"></i>Soft Computing</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me2s3','HPC ARCHITECTURE AND ECO SYSTEM','ME200203',3,'master2.html')"><i class="fa-solid fa-circle-dot"></i>HPC Architecture &amp; Eco System</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me2s4','PARALLEL ALGORITHMS','ME200204',4,'master2.html')"><i class="fa-solid fa-circle-dot"></i>Parallel Algorithms</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./master3.html">
+                <!-- M.E. Sem 3 -->
+                <li class="sem-item" id="sem-master-3">
+                    <button class="sem-btn" onclick="toggleSem('master-3')">
+                        <span class="sem-btn-left">
+                            <span class="sem-badge">3</span>
                             Semester 3
-                        </a>
-                    </li>
+                        </span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('me3s1','INTERNAL REVIEW-1','ME300301',1,'master3.html')"><i class="fa-solid fa-circle-dot"></i>Internal Review-1</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me3s2','DISSERTATION PHASE-1','ME100302',2,'master3.html')"><i class="fa-solid fa-circle-dot"></i>Dissertation Phase-1</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me3s3','BUSINESS ANALYTICS','ME100305',3,'master3.html')"><i class="fa-solid fa-circle-dot"></i>Business Analytics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me3s4','CLOUD COMPUTING','ME103301',4,'master3.html')"><i class="fa-solid fa-circle-dot"></i>Cloud Computing</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./master4.html">
+                <!-- M.E. Sem 4 -->
+                <li class="sem-item" id="sem-master-4">
+                    <button class="sem-btn" onclick="toggleSem('master-4')">
+                        <span class="sem-btn-left">
+                            <span class="sem-badge">4</span>
                             Semester 4
-                        </a>
-                    </li>
-                </ul>
+                        </span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('me4s1','INTERNAL REVIEW-2','ME400401',1,'master4.html')"><i class="fa-solid fa-circle-dot"></i>Internal Review-2</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('me4s2','DISSERTATION PHASE-2','ME400402',2,'master4.html')"><i class="fa-solid fa-circle-dot"></i>Dissertation Phase-2</div></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
+        <!-- ── DEGREE ────────────────────────── -->
+        <div class="sb-section-label">
+            <i class="fa-solid fa-user-graduate"></i>
+            Degree (B.E.)
+        </div>
 
-            <!-- ================= DEGREE ================= -->
+        <div class="course-item" id="course-degree">
+            <button class="course-btn" onclick="toggleCourse('degree')">
+                <span class="course-btn-left">
+                    <span class="course-btn-icon"><i class="fa-solid fa-book"></i></span>
+                    B.E. / B.Tech
+                </span>
+                <i class="fa-solid fa-chevron-down course-arrow"></i>
+            </button>
+            <ul class="sem-list" id="sem-list-degree">
 
-            <li class="menu-title">
-                <i class="fa-solid fa-user-graduate"></i>
-                <span>Degree</span>
-            </li>
+                <li class="sem-item" id="sem-degree-1">
+                    <button class="sem-btn" onclick="toggleSem('degree-1')">
+                        <span class="sem-btn-left"><span class="sem-badge">1</span>Semester 1</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('be1s1','MATHEMATICS -1','BE200101',1,'sem1.html')"><i class="fa-solid fa-circle-dot"></i>Mathematics -1</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be1s2','SEMICONDUCTOR PHYSICS','BE200102',2,'sem1.html')"><i class="fa-solid fa-circle-dot"></i>Semiconductor Physics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be1s3','APPLIED PHYSICS','BE200103',3,'sem1.html')"><i class="fa-solid fa-circle-dot"></i>Applied Physics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be1s4','PROGRAMMING FOR PROBLEM SOLVING','BE200104',4,'sem1.html')"><i class="fa-solid fa-circle-dot"></i>Programming for Problem Solving</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be1s5','ENGLISH','BE200105',5,'sem1.html')"><i class="fa-solid fa-circle-dot"></i>English</div></li>
+                    </ul>
+                </li>
 
+                <li class="sem-item" id="sem-degree-2">
+                    <button class="sem-btn" onclick="toggleSem('degree-2')">
+                        <span class="sem-btn-left"><span class="sem-badge">2</span>Semester 2</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link coming-soon"><i class="fa-solid fa-clock"></i>Content Coming Soon</div></li>
+                    </ul>
+                </li>
 
-            <!-- B.E. -->
-            <li class="dropdown">
+                <li class="sem-item" id="sem-degree-3">
+                    <button class="sem-btn" onclick="toggleSem('degree-3')">
+                        <span class="sem-btn-left"><span class="sem-badge">3</span>Semester 3</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('be3s1','TECHNICAL WRITING & COMMUNICATION SKILLS','BE300301',1,'sem3.html')"><i class="fa-solid fa-circle-dot"></i>Technical Writing &amp; Comm. Skills</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be3s2','INDIAN CONSTITUTION','BE300302',2,'sem3.html')"><i class="fa-solid fa-circle-dot"></i>Indian Constitution</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be3s3','PROBABILITY & STATISTICS','BE300303',3,'sem3.html')"><i class="fa-solid fa-circle-dot"></i>Probability &amp; Statistics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be3s4','DIGITAL FUNDAMENTALS','BE300304',4,'sem3.html')"><i class="fa-solid fa-circle-dot"></i>Digital Fundamentals</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be3s5','DATA STRUCTURE','BE300305',5,'sem3.html')"><i class="fa-solid fa-circle-dot"></i>Data Structure</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be3s6','DATABASE MANAGEMENT SYSTEMS','BE300306',6,'sem3.html')"><i class="fa-solid fa-circle-dot"></i>Database Management Systems</div></li>
+                    </ul>
+                </li>
 
-                <button class="dropdown-btn">
-                    <span>
-                        <i class="fa-solid fa-book"></i>
-                        B.E. / B.Tech
-                    </span>
+                <li class="sem-item" id="sem-degree-4">
+                    <button class="sem-btn" onclick="toggleSem('degree-4')">
+                        <span class="sem-btn-left"><span class="sem-badge">4</span>Semester 4</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('be4s1','DISCRETE MATHEMATICS','BE400401',1,'sem4.html')"><i class="fa-solid fa-circle-dot"></i>Discrete Mathematics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be4s2','PRINCIPLES OF ECONOMICS & MANAGEMENT','BE400402',2,'sem4.html')"><i class="fa-solid fa-circle-dot"></i>Principles of Economics &amp; Mgmt.</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be4s3','OBJECT ORIENTED PROGRAMMING -1','BE400403',3,'sem4.html')"><i class="fa-solid fa-circle-dot"></i>Object Oriented Programming -1</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be4s4','COMPUTER ORGANIZATION & ARCHITECTURE','BE400404',4,'sem4.html')"><i class="fa-solid fa-circle-dot"></i>Computer Organization &amp; Arch.</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be4s5','OPERATING SYSTEM','BE400405',5,'sem4.html')"><i class="fa-solid fa-circle-dot"></i>Operating System</div></li>
+                    </ul>
+                </li>
 
-                    <i class="fa-solid fa-chevron-down arrow"></i>
-                </button>
+                <li class="sem-item" id="sem-degree-5">
+                    <button class="sem-btn" onclick="toggleSem('degree-5')">
+                        <span class="sem-btn-left"><span class="sem-badge">5</span>Semester 5</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('be5s1','CONTRIBUTOR PERSONALITY DEVELOPMENT PROGRAM','BE500501',1,'sem5.html')"><i class="fa-solid fa-circle-dot"></i>Personality Development Program</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be5s2','PROFESSIONAL ETHICS','BE500502',2,'sem5.html')"><i class="fa-solid fa-circle-dot"></i>Professional Ethics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be5s3','ANALYSIS AND DESIGN OF ALGORITHMS','BE500503',3,'sem5.html')"><i class="fa-solid fa-circle-dot"></i>Analysis &amp; Design of Algorithms</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be5s4','COMPUTER NETWORKS','BE500504',4,'sem5.html')"><i class="fa-solid fa-circle-dot"></i>Computer Networks</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be5s5','PYTHON FOR DATA SCIENCE','BE500505',5,'sem5.html')"><i class="fa-solid fa-circle-dot"></i>Python for Data Science</div></li>
+                    </ul>
+                </li>
 
+                <li class="sem-item" id="sem-degree-6">
+                    <button class="sem-btn" onclick="toggleSem('degree-6')">
+                        <span class="sem-btn-left"><span class="sem-badge">6</span>Semester 6</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('be6s1','CONTRIBUTOR PERSONALITY DEVELOPMENT PROGRAM','BE600601',1,'sem6.html')"><i class="fa-solid fa-circle-dot"></i>Personality Development Program</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be6s2','THEORY OF COMPUTATION','BE600602',2,'sem6.html')"><i class="fa-solid fa-circle-dot"></i>Theory of Computation</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be6s3','MICROPROCESSORS AND INTERFACING','BE600603',3,'sem6.html')"><i class="fa-solid fa-circle-dot"></i>Microprocessors &amp; Interfacing</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be6s4','WEB PROGRAMMING','BE600604',4,'sem6.html')"><i class="fa-solid fa-circle-dot"></i>Web Programming</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be6s5','ADVANCED JAVA PROGRAMMING','BE600605',5,'sem6.html')"><i class="fa-solid fa-circle-dot"></i>Advanced Java Programming</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be6s6','IOT AND APPLICATIONS','BE600606',6,'sem6.html')"><i class="fa-solid fa-circle-dot"></i>IoT and Applications</div></li>
+                    </ul>
+                </li>
 
-                <ul class="submenu">
+                <li class="sem-item" id="sem-degree-7">
+                    <button class="sem-btn" onclick="toggleSem('degree-7')">
+                        <span class="sem-btn-left"><span class="sem-badge">7</span>Semester 7</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('be7s1','SUMMER INTERNSHIP','BE700701',1,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>Summer Internship</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be7s2','MODERN COMPILER DESIGN','BE103701',2,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>Modern Compiler Design</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be7s3','ARTIFICIAL INTELLIGENCE PROGRAMMING WITH PROLOG','BE700703',3,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>AI Programming with Prolog</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be7s4','CLOUD COMPUTING','BE700704',4,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>Cloud Computing</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be7s5','INFORMATION SECURITY','BE103707',5,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>Information Security</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be7s6','INTRODUCTION TO MACHINE LEARNING','BE700706',6,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>Intro. to Machine Learning</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('be7s7','FUNDAMENTAL OF IOT','BE700707',7,'sem7.html')"><i class="fa-solid fa-circle-dot"></i>Fundamental of IoT</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./sem1.html">
-                            Semester 1
-                        </a>
-                    </li>
+                <li class="sem-item" id="sem-degree-8">
+                    <button class="sem-btn" onclick="toggleSem('degree-8')">
+                        <span class="sem-btn-left"><span class="sem-badge">8</span>Semester 8</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link coming-soon"><i class="fa-solid fa-clock"></i>Content Coming Soon</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./sem2.html">
-                            Semester 2
-                        </a>
-                    </li>
+            </ul>
+        </div>
 
-                    <li>
-                        <a href="./sem3.html">
-                            Semester 3
-                        </a>
-                    </li>
+        <!-- ── DIPLOMA ─────────────────────── -->
+        <div class="sb-section-label">
+            <i class="fa-solid fa-school"></i>
+            Diploma
+        </div>
 
-                    <li>
-                        <a href="./sem4.html">
-                            Semester 4
-                        </a>
-                    </li>
+        <div class="course-item" id="course-diploma">
+            <button class="course-btn" onclick="toggleCourse('diploma')">
+                <span class="course-btn-left">
+                    <span class="course-btn-icon"><i class="fa-solid fa-laptop-code"></i></span>
+                    Diploma (CE)
+                </span>
+                <i class="fa-solid fa-chevron-down course-arrow"></i>
+            </button>
+            <ul class="sem-list" id="sem-list-diploma">
 
-                    <li>
-                        <a href="./sem5.html">
-                            Semester 5
-                        </a>
-                    </li>
+                <li class="sem-item" id="sem-diploma-1">
+                    <button class="sem-btn" onclick="toggleSem('diploma-1')">
+                        <span class="sem-btn-left"><span class="sem-badge">1</span>Semester 1</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('dip1s1','PROGRAMMING FUNDAMENTALS','DE100101',1,'sem1dip.html')"><i class="fa-solid fa-circle-dot"></i>Programming Fundamentals</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip1s2','FUNDAMENTAL OF ELECTRONICS','DE100102',2,'sem1dip.html')"><i class="fa-solid fa-circle-dot"></i>Fundamental of Electronics</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip1s3','BASIC MATHS','DE100103',3,'sem1dip.html')"><i class="fa-solid fa-circle-dot"></i>Basic Maths</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip1s4','COMMUNICATION SKILLS','DE100104',4,'sem1dip.html')"><i class="fa-solid fa-circle-dot"></i>Communication Skills</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./sem6.html">
-                            Semester 6
-                        </a>
-                    </li>
+                <li class="sem-item" id="sem-diploma-2">
+                    <button class="sem-btn" onclick="toggleSem('diploma-2')">
+                        <span class="sem-btn-left"><span class="sem-badge">2</span>Semester 2</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link coming-soon"><i class="fa-solid fa-clock"></i>Content Coming Soon</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./sem7.html">
-                            Semester 7
-                        </a>
-                    </li>
+                <li class="sem-item" id="sem-diploma-3">
+                    <button class="sem-btn" onclick="toggleSem('diploma-3')">
+                        <span class="sem-btn-left"><span class="sem-badge">3</span>Semester 3</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('dip3s1','SUMMER INTERNSHIP - 1','DE300301',1,'sem3dip.html')"><i class="fa-solid fa-circle-dot"></i>Summer Internship - 1</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip3s2','SCRIPTING LANGUAGE - PYTHON','DE300302',2,'sem3dip.html')"><i class="fa-solid fa-circle-dot"></i>Scripting Language - Python</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip3s3','BASICS OF OPERATING SYSTEM','DE300303',3,'sem3dip.html')"><i class="fa-solid fa-circle-dot"></i>Basics of Operating System</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip3s4','DATA STRUCTURE AND ALGORITHMS','DE300304',4,'sem3dip.html')"><i class="fa-solid fa-circle-dot"></i>Data Structure and Algorithms</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip3s5','FUNDAMENTAL OF SOFTWARE DEVELOPMENT','DE300305',5,'sem3dip.html')"><i class="fa-solid fa-circle-dot"></i>Fundamental of Software Dev.</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip3s6','DIGITAL MARKETING','DE103305',6,'sem3dip.html')"><i class="fa-solid fa-circle-dot"></i>Digital Marketing</div></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <a href="./sem8.html">
-                            Semester 8
-                        </a>
-                    </li>
+                <li class="sem-item" id="sem-diploma-4">
+                    <button class="sem-btn" onclick="toggleSem('diploma-4')">
+                        <span class="sem-btn-left"><span class="sem-badge">4</span>Semester 4</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link coming-soon"><i class="fa-solid fa-clock"></i>Content Coming Soon</div></li>
+                    </ul>
+                </li>
 
-                </ul>
+                <li class="sem-item" id="sem-diploma-5">
+                    <button class="sem-btn" onclick="toggleSem('diploma-5')">
+                        <span class="sem-btn-left"><span class="sem-badge">5</span>Semester 5</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link" onclick="showMaterial('dip5s1','SUMMER INTERNSHIP - 2','DE500501',1,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Summer Internship - 2</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip5s2','INTRODUCTION TO MACHINE LEARNING','DE500502',2,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Introduction to Machine Learning</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip5s3','MOBILE APPLICATION DEVELOPMENT','DE500503',3,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Mobile Application Development</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip5s4','ADVANCED COMPUTER NETWORKS','DE500504',4,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Advanced Computer Networks</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip5s5','FUNDAMENTALS OF AI','DE500505',5,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Fundamentals of AI</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip5s6','ENTREPRENEURSHIP AND STARTUPS','DE500506',6,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Entrepreneurship &amp; Startups</div></li>
+                        <li><div class="subj-link" onclick="showMaterial('dip5s7','COMPUTER ORGANIZATION AND ARCHITECTURE','DE500507',7,'sem5dip.html')"><i class="fa-solid fa-circle-dot"></i>Computer Organization &amp; Arch.</div></li>
+                    </ul>
+                </li>
 
-            </li>
+                <li class="sem-item" id="sem-diploma-6">
+                    <button class="sem-btn" onclick="toggleSem('diploma-6')">
+                        <span class="sem-btn-left"><span class="sem-badge">6</span>Semester 6</span>
+                        <i class="fa-solid fa-chevron-down sem-arrow"></i>
+                    </button>
+                    <ul class="subj-list">
+                        <li><div class="subj-link coming-soon"><i class="fa-solid fa-clock"></i>Content Coming Soon</div></li>
+                    </ul>
+                </li>
 
-               
-            <!-- ================= DIPLOMA ================= -->
+            </ul>
+        </div>
 
-            <li class="menu-title">
+        <div id="sbNoResult" class="sb-no-result">
+            <i class="fa-solid fa-magnifying-glass"></i> No results found.
+        </div>
 
-                <i class="fa-solid fa-school"></i>
+    </nav>
+</aside>
 
-                <span>Diploma</span>
+<!-- ============ MAIN CONTENT ============ -->
+<main class="main-content" id="mainContent">
 
-            </li>
-            
+    <!-- Welcome Panel (default) -->
+    <div id="welcomePanel">
 
-            <!-- Diploma Computer -->
-            <li class="dropdown">
-
-                <button class="dropdown-btn">
-
-                    <span>
-                        <i class="fa-solid fa-computer"></i>
-                        Diploma Computer
-                    </span>
-
-                    <i class="fa-solid fa-chevron-down arrow"></i>
-
-                </button>
-
-
-                <ul class="submenu">
-
-                    <li>
-                        <a href="./sem1dip.html">
-                            Semester 1
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="./sem2dip.html">
-                            Semester 2
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="./sem3dip.html">
-                            Semester 3
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="./sem4dip.html">
-                            Semester 4
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="./sem5dip.html">
-                            Semester 5
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="./sem6dip.html">
-                            Semester 6
-                        </a>
-                    </li>
-
-                </ul>
-
-            </li>
-        </ul>
-
-    </aside>
-
-
-
-    <!-- ================= MAIN CONTENT ================= -->
-
-    <main class="main-content">
-
-        <header class="top-header">
-
-            <div>
-                <h1>Student Dashboard</h1>
-
-                <p>
-                    Select your degree, diploma and semester.
-                </p>
+        <!-- Breadcrumb -->
+        <div class="top-bar">
+            <div class="page-breadcrumb" id="mainBreadcrumb">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+                <span class="sep">/</span>
+                <span class="current">Dashboard</span>
             </div>
+        </div>
 
-        </header>
+        <!-- Hero -->
+        <div class="welcome-hero">
+            <div>
+                <h1>Welcome to Student Hub 👋</h1>
+                <p>Pick a course below to browse its semesters, then click any semester to access subjects and study materials.</p>
+            </div>
+            <i class="fa-solid fa-graduation-cap welcome-hero-icon"></i>
+        </div>
 
+        <!-- Course Cards (Level 0) -->
+        <div id="courseCardsView">
+            <div class="course-cards-grid">
 
-        <section class="dashboard">
-
-            <div class="welcome-card">
-
-                <div>
-                    <h2>Welcome to Student Hub 👋</h2>
-
-                    <p>
-                        Access your semester pages, notes,
-                        subjects and study material from the menu.
-                    </p>
+                <!-- M.E. -->
+                <div class="course-card purple" onclick="showSemGrid('master')">
+                    <div class="course-card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>M.E. / M.Tech</h3>
+                    <p>Master of Engineering</p>
+                    <span class="course-card-badge"><i class="fa-solid fa-layer-group"></i> 4 Semesters</span>
                 </div>
 
-                <i class="fa-solid fa-graduation-cap"></i>
+                <!-- B.E. -->
+                <div class="course-card blue" onclick="showSemGrid('degree')">
+                    <div class="course-card-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3>B.E. / B.Tech</h3>
+                    <p>Bachelor of Engineering</p>
+                    <span class="course-card-badge"><i class="fa-solid fa-layer-group"></i> 8 Semesters</span>
+                </div>
+
+                <!-- Diploma -->
+                <div class="course-card gold" onclick="showSemGrid('diploma')">
+                    <div class="course-card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Diploma (CE)</h3>
+                    <p>Computer Engineering Diploma</p>
+                    <span class="course-card-badge"><i class="fa-solid fa-layer-group"></i> 6 Semesters</span>
+                </div>
 
             </div>
-
-
-            <div class="cards">
-
-                <a href="./master4.html" class="card">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-
-                    <h3>Master</h3>
-
-                    <p>
-                        4th Semester (Master)
-                    </p>
-
-                </a>
-
-                
-                <a href="./master3.html" class="card">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-
-                    <h3>Master</h3>
-
-                    <p>
-                        3rd Semester (Master)
-                    </p>
-
-                </a>
-                
-                
-                <a href="./master2.html" class="card">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-
-                    <h3>Master</h3>
-
-                    <p>
-                        2nd Semester (Master)
-                    </p>
-
-                </a>
-
-                
-                <a href="./master1.html" class="card">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-
-                    <h3>Master</h3>
-
-                    <p>
-                        1st Semester (Master)
-                    </p>
-
-                </a>
-
-
-
-                <a href="./sem8.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        8th Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem7.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        7th Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem6.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        6th Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem5.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        5th Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem4.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        4th Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem3.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        3rd Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem2.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        2nd Semester (Degree)
-                    </p>
-
-                </a>
-
-                <a href="./sem1.html" class="card">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <h3>Degree</h3>
-
-                    <p>
-                        1st Semester (Degree)
-                    </p>
-
-                </a>
-
-
-                <a href="./sem6dip.html" class="card">
-
-                    <i class="fa-solid fa-school"></i>
-
-                    <h3>Diploma</h3>
-
-                    <p>
-                        6th semester (diploma)
-                    </p>
-
-                </a>
-
-                <a href="./sem5dip.html" class="card">
-
-                    <i class="fa-solid fa-school"></i>
-
-                    <h3>Diploma</h3>
-
-                    <p>
-                        5th semester (diploma)
-                    </p>
-
-                </a>
-
-                <a href="./sem4dip.html" class="card">
-
-                    <i class="fa-solid fa-school"></i>
-
-                    <h3>Diploma</h3>
-
-                    <p>
-                        4th semester (diploma)
-                    </p>
-
-                </a>
-
-                <a href="./sem3dip.html" class="card">
-
-                    <i class="fa-solid fa-school"></i>
-
-                    <h3>Diploma</h3>
-
-                    <p>
-                        3rd semester (diploma)
-                    </p>
-
-                </a>
-
-                <a href="./sem2dip.html" class="card">
-
-                    <i class="fa-solid fa-school"></i>
-
-                    <h3>Diploma</h3>
-
-                    <p>
-                        2nd semester (diploma)
-                    </p>
-
-                </a>
-
-                <a href="./sem1dip.html" class="card">
-
-                    <i class="fa-solid fa-school"></i>
-
-                    <h3>Diploma</h3>
-
-                    <p>
-                        1st semester (diploma)
-                    </p>
-
-                </a>
-
-
-
-
-
+        </div>
+
+        <!-- Semester Grid (Level 1 — shown after course click) -->
+        <div id="semGridPanel">
+            <div class="sem-grid-header">
+                <button class="back-btn" onclick="backToCourses()">
+                    <i class="fa-solid fa-arrow-left"></i> All Courses
+                </button>
+                <div class="sem-grid-title">
+                    <h2 id="semGridTitle">Semesters</h2>
+                    <p  id="semGridSubtitle">Choose a semester to view subjects &amp; materials</p>
+                </div>
             </div>
+            <div class="sem-cards-grid" id="semCardsGrid"></div>
+        </div>
 
-        </section>
+    </div><!-- /welcomePanel -->
 
-    </main>
+    <!-- Material Panel (shown on subject click) -->
+    <div id="materialPanel">
 
+        <!-- Breadcrumb -->
+        <div class="top-bar">
+            <div class="page-breadcrumb" id="panelBreadcrumb">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+                <span class="sep">/</span>
+                <span class="current" id="bcSem">–</span>
+                <span class="sep">/</span>
+                <span class="current" id="bcSubject">–</span>
+            </div>
+        </div>
 
-    <!-- JavaScript -->
-    <script>
-        const menuToggle = document.getElementById("menuToggle");
-const closeBtn = document.getElementById("closeBtn");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
+        <!-- Back + title row -->
+        <div class="panel-header">
+            <button class="back-to-sem-btn" onclick="goBackToWelcome()">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <div class="panel-title-group">
+                <h2 id="panelSubjectName">Subject Name</h2>
+                <p id="panelSubjectCode">Code</p>
+            </div>
+            <a id="panelPageLink" href="#" target="_blank"
+               style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;font-weight:700;color:#1e293b;text-decoration:none;transition:.2s;white-space:nowrap;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                Full Page
+            </a>
+        </div>
 
+        <!-- Inline subject card -->
+        <div class="inline-subject-card">
+            <div class="inline-subject-header">
+                <div class="inline-subject-num" id="panelSubjectNum">01</div>
+                <div class="inline-subject-info">
+                    <h2 id="panelHeaderName">–</h2>
+                    <p  id="panelHeaderCode">–</p>
+                </div>
+            </div>
+            <div class="inline-sections" id="panelSections">
+                <!-- Sections injected by JS -->
+            </div>
+        </div>
 
-// Open Sidebar
-menuToggle.addEventListener("click", function () {
+    </div><!-- /materialPanel -->
 
-    sidebar.classList.add("active");
+</main>
 
-    overlay.classList.add("active");
+<script>
+/* ============================================================
+   DATA — all subject materials
+   Add links to href/download as content is uploaded.
+============================================================ */
+const MATERIALS = {
+    /* ── M.E. Semester 1 ──────────────────────── */
+    me1s1: { sections: [
+        { icon:'fa-book',      title:'Syllabus',         files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
+        { icon:'fa-file-lines',title:'Units Notes',       files:[{ name:'Unit Notes PDF', view:'', dl:'' }] },
+        { icon:'fa-pen-to-square', title:'Question Bank', files:[{ name:'Question Bank PDF', view:'', dl:'' }] }
+    ]},
+    me1s2: { sections: [
+        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
+        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
+    ]},
+    me1s3: { sections: [
+        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
+        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
+    ]},
+    me1s4: { sections: [
+        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
+        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
+    ]},
+    me1s5: { sections: [
+        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
+        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
+    ]},
+    /* M.E. Sem 2 */
+    me2s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me2s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me2s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me2s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    /* M.E. Sem 3 */
+    me3s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me3s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me3s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me3s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    /* M.E. Sem 4 */
+    me4s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
+    me4s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
 
-});
+    /* ── B.E. Semester 1 ──────────────────────── */
+    be1s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]},{icon:'fa-file-circle-question',title:'End Sem Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be1s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be1s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be1s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be1s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    /* B.E. Sem 3 */
+    be3s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be3s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be3s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be3s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be3s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be3s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    /* B.E. Sem 4 */
+    be4s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be4s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be4s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be4s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be4s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    /* B.E. Sem 5–7 (abbreviated — same pattern) */
+    be5s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be5s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be5s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be5s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be5s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be6s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be6s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be6s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be6s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be6s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be6s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    be7s7:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    /* ── Diploma Sem 1 ─────────────────────────── */
+    dip1s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip1s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip1s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip1s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    /* Diploma Sem 3 */
+    dip3s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip3s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip3s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip3s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip3s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip3s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    /* Diploma Sem 5 */
+    dip5s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip5s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip5s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip5s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip5s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip5s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+    dip5s7:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
+};
 
+/* ============================================================
+   STATE
+============================================================ */
+var currentSubjectLink = null;
 
-// Close Sidebar
-closeBtn.addEventListener("click", function () {
+/* ============================================================
+   ACCORDION — Course (Level 1)
+============================================================ */
+function toggleCourse(id) {
+    var el = document.getElementById('course-' + id);
+    var isOpen = el.classList.contains('open');
+    document.querySelectorAll('.course-item').forEach(function(c){ c.classList.remove('open'); });
+    if (!isOpen) el.classList.add('open');
+}
 
-    sidebar.classList.remove("active");
+/* ============================================================
+   ACCORDION — Semester (Level 2)
+============================================================ */
+function toggleSem(id) {
+    var el = document.getElementById('sem-' + id);
+    var isOpen = el.classList.contains('open');
+    // Close siblings inside same course
+    var parent = el.closest('.sem-list');
+    if (parent) parent.querySelectorAll('.sem-item').forEach(function(s){ s.classList.remove('open'); });
+    if (!isOpen) el.classList.add('open');
+}
 
-    overlay.classList.remove("active");
-
-});
-
-
-// Close Sidebar when clicking overlay
-overlay.addEventListener("click", function () {
-
-    sidebar.classList.remove("active");
-
-    overlay.classList.remove("active");
-
-});
-
-
-// ===============================
-// Dropdown Menu
-// ===============================
-
-const dropdownButtons =
-    document.querySelectorAll(".dropdown-btn");
-
-
-dropdownButtons.forEach(function(button) {
-
-    button.addEventListener("click", function() {
-
-        const dropdown =
-            this.parentElement;
-
-
-        // Close other dropdowns
-        document
-            .querySelectorAll(".dropdown")
-            .forEach(function(item) {
-
-                if (item !== dropdown) {
-
-                    item.classList.remove("active");
-
-                }
-
-            });
-
-
-        // Toggle current dropdown
-        dropdown.classList.toggle("active");
-
-    });
-
-});
-
-
-// Close mobile sidebar after clicking a link
-
-const sidebarLinks =
-    document.querySelectorAll(".sidebar a");
-
-
-sidebarLinks.forEach(function(link) {
-
-    link.addEventListener("click", function() {
-
-        if (window.innerWidth <= 768) {
-
-            sidebar.classList.remove("active");
-
-            overlay.classList.remove("active");
-
+/* ============================================================
+   SHOW MATERIAL PANEL
+============================================================ */
+function showMaterial(key, name, code, num, pageFile) {
+    // Highlight active link
+    if (currentSubjectLink) currentSubjectLink.classList.remove('active');
+    // Find clicked element via event
+    var clicked = event && event.currentTarget ? event.currentTarget : null;
+    if (!clicked) {
+        // Fallback: find by data
+        var all = document.querySelectorAll('.subj-link');
+        for (var i = 0; i < all.length; i++) {
+            var fn = all[i].getAttribute('onclick') || '';
+            if (fn.indexOf("'" + key + "'") !== -1) { clicked = all[i]; break; }
         }
+    }
+    if (clicked) { clicked.classList.add('active'); currentSubjectLink = clicked; }
 
+    // Update panel text
+    document.getElementById('panelSubjectName').textContent = name;
+    document.getElementById('panelSubjectCode').textContent = 'Code: ' + code;
+    document.getElementById('panelHeaderName').textContent = name;
+    document.getElementById('panelHeaderCode').textContent = code;
+    document.getElementById('panelSubjectNum').textContent = (num < 10 ? '0' : '') + num;
+    document.getElementById('panelPageLink').href = './' + pageFile;
+
+    // Breadcrumb
+    document.getElementById('bcSem').textContent = pageFile.replace('.html','').toUpperCase().replace('SEM','Sem ').replace('MASTER','M.E. Sem ').replace('DIP',' (Diploma)');
+    document.getElementById('bcSubject').textContent = name.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+
+    // Build sections
+    var sectionsEl = document.getElementById('panelSections');
+    sectionsEl.innerHTML = '';
+    var data = MATERIALS[key];
+    if (!data || !data.sections || data.sections.length === 0) {
+        sectionsEl.innerHTML = '<div class="inline-empty"><i class="fa-solid fa-clock"></i>Materials will be uploaded soon.</div>';
+    } else {
+        data.sections.forEach(function(sec) {
+            var secEl = document.createElement('div');
+            secEl.className = 'inline-section';
+            var hasFiles = sec.files && sec.files.length > 0 && sec.files.some(function(f){ return f.view || f.dl; });
+            var filesHtml = '';
+            if (!hasFiles) {
+                filesHtml = '<div class="inline-file-item"><div class="inline-file-name"><i class="fa-solid fa-file-pdf"></i><span>Not uploaded yet</span></div><div class="inline-file-actions"><span style="font-size:12px;color:#94a3b8;">Coming Soon</span></div></div>';
+            } else {
+                sec.files.forEach(function(f) {
+                    var viewBtn = f.view ? '<a href="'+f.view+'" target="_blank" class="btn-view"><i class="fa-solid fa-eye"></i>View</a>' : '';
+                    var dlBtn   = f.dl   ? '<a href="'+f.dl+'" download class="btn-dl"><i class="fa-solid fa-download"></i>Download</a>' : '';
+                    filesHtml += '<div class="inline-file-item"><div class="inline-file-name"><i class="fa-solid fa-file-pdf"></i><span>'+f.name+'</span></div><div class="inline-file-actions">'+viewBtn+dlBtn+'</div></div>';
+                });
+            }
+            secEl.innerHTML = '<div class="inline-section-title"><i class="fa-solid '+sec.icon+'"></i>'+sec.title+'</div><div class="inline-file-list">'+filesHtml+'</div>';
+            sectionsEl.appendChild(secEl);
+        });
+    }
+
+    // Switch panels
+    document.getElementById('welcomePanel').style.display = 'none';
+    document.getElementById('materialPanel').style.display = 'block';
+
+    // Scroll to top on mobile
+    if (window.innerWidth <= 768) {
+        closeSidebar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+
+function goBackToWelcome() {
+    document.getElementById('welcomePanel').style.display = 'block';
+    document.getElementById('materialPanel').style.display = 'none';
+    if (currentSubjectLink) { currentSubjectLink.classList.remove('active'); currentSubjectLink = null; }
+    // also reset to course cards view (not sem grid)
+    backToCourses();
+}
+
+/* ============================================================
+   SEMESTER DATA (per course)
+============================================================ */
+var SEM_DATA = {
+    master: {
+        label: 'M.E. / M.Tech',
+        subtitle: 'Master of Engineering — Computer Science',
+        color: 'purple',
+        icon: 'fa-graduation-cap',
+        sems: [
+            { num:1, label:'Semester 1', sublabel:'5 Subjects', url:'master1.html', active:true  },
+            { num:2, label:'Semester 2', sublabel:'4 Subjects', url:'master2.html', active:true  },
+            { num:3, label:'Semester 3', sublabel:'4 Subjects', url:'master3.html', active:true  },
+            { num:4, label:'Semester 4', sublabel:'2 Subjects', url:'master4.html', active:true  }
+        ]
+    },
+    degree: {
+        label: 'B.E. / B.Tech',
+        subtitle: 'Bachelor of Engineering — Computer Engineering',
+        color: 'blue',
+        icon: 'fa-user-graduate',
+        sems: [
+            { num:1, label:'Semester 1', sublabel:'5 Subjects', url:'sem1.html', active:true  },
+            { num:2, label:'Semester 2', sublabel:'Coming Soon', url:'sem2.html', active:false },
+            { num:3, label:'Semester 3', sublabel:'6 Subjects', url:'sem3.html', active:true  },
+            { num:4, label:'Semester 4', sublabel:'5 Subjects', url:'sem4.html', active:true  },
+            { num:5, label:'Semester 5', sublabel:'5 Subjects', url:'sem5.html', active:true  },
+            { num:6, label:'Semester 6', sublabel:'6 Subjects', url:'sem6.html', active:true  },
+            { num:7, label:'Semester 7', sublabel:'7 Subjects', url:'sem7.html', active:true  },
+            { num:8, label:'Semester 8', sublabel:'Coming Soon', url:'sem8.html', active:false }
+        ]
+    },
+    diploma: {
+        label: 'Diploma (CE)',
+        subtitle: 'Diploma in Computer Engineering',
+        color: 'gold',
+        icon: 'fa-laptop-code',
+        sems: [
+            { num:1, label:'Semester 1', sublabel:'4 Subjects', url:'sem1dip.html', active:true  },
+            { num:2, label:'Semester 2', sublabel:'Coming Soon', url:'sem2dip.html', active:false },
+            { num:3, label:'Semester 3', sublabel:'6 Subjects', url:'sem3dip.html', active:true  },
+            { num:4, label:'Semester 4', sublabel:'Coming Soon', url:'sem4dip.html', active:false },
+            { num:5, label:'Semester 5', sublabel:'7 Subjects', url:'sem5dip.html', active:true  },
+            { num:6, label:'Semester 6', sublabel:'Coming Soon', url:'sem6dip.html', active:false }
+        ]
+    }
+};
+
+var numColors = {
+    purple: { bg:'linear-gradient(135deg,#7c3aed,#6d28d9)', color:'#fff' },
+    blue:   { bg:'linear-gradient(135deg,#2563eb,#1d4ed8)', color:'#fff' },
+    gold:   { bg:'linear-gradient(135deg,#f7c948,#d99b1d)', color:'#1b102d' }
+};
+
+function showSemGrid(courseKey) {
+    var data = SEM_DATA[courseKey];
+    if (!data) return;
+
+    // Update titles
+    document.getElementById('semGridTitle').textContent = data.label + ' — All Semesters';
+    document.getElementById('semGridSubtitle').textContent = data.subtitle;
+
+    // Build semester cards
+    var grid = document.getElementById('semCardsGrid');
+    grid.innerHTML = '';
+    var col = numColors[data.color];
+
+    data.sems.forEach(function(sem) {
+        var card = document.createElement('a');
+        card.href = sem.active ? './' + sem.url : '#';
+        card.className = 'sem-card' + (sem.active ? '' : ' coming-soon');
+        if (!sem.active) card.setAttribute('aria-disabled', 'true');
+
+        card.innerHTML =
+            '<div class="sem-num" style="background:' + col.bg + ';color:' + col.color + ';">'
+                + sem.num +
+            '</div>' +
+            '<span class="sem-label">' + sem.label + '</span>' +
+            '<span class="sem-sublabel">' + sem.sublabel + '</span>' +
+            (sem.active
+                ? '<span style="font-size:12px;color:var(--blue);font-weight:700;display:flex;align-items:center;gap:4px;"><i class="fa-solid fa-arrow-right"></i> View</span>'
+                : '<span class="coming-tag">Coming Soon</span>');
+
+        grid.appendChild(card);
     });
 
+    // Update breadcrumb
+    var bc = document.getElementById('mainBreadcrumb');
+    if (bc) {
+        bc.innerHTML =
+            '<a href="index.html"><i class="fa-solid fa-house"></i> Home</a>' +
+            '<span class="sep">/</span>' +
+            '<span class="current" style="cursor:pointer;color:var(--blue);" onclick="backToCourses()">Dashboard</span>' +
+            '<span class="sep">/</span>' +
+            '<span class="current">' + data.label + '</span>';
+    }
+
+    // Show/hide panels
+    document.getElementById('courseCardsView').style.display = 'none';
+    document.getElementById('semGridPanel').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function backToCourses() {
+    document.getElementById('courseCardsView').style.display = 'block';
+    document.getElementById('semGridPanel').style.display = 'none';
+
+    // Reset breadcrumb
+    var bc = document.getElementById('mainBreadcrumb');
+    if (bc) {
+        bc.innerHTML =
+            '<a href="index.html"><i class="fa-solid fa-house"></i> Home</a>' +
+            '<span class="sep">/</span>' +
+            '<span class="current">Dashboard</span>';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+
+/* ============================================================
+   SIDEBAR TOGGLE
+============================================================ */
+function openSidebar()  { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+
+document.getElementById('menuToggle').addEventListener('click', openSidebar);
+document.getElementById('closeBtn').addEventListener('click', closeSidebar);
+document.getElementById('overlay').addEventListener('click', closeSidebar);
+
+/* ============================================================
+   AUTO-OPEN COURSE FROM URL HASH
+   e.g. sidebar.html#master  sidebar.html#degree  sidebar.html#diploma
+============================================================ */
+(function () {
+    var hash = window.location.hash.replace('#', '').toLowerCase();
+    if (hash === 'master' || hash === 'degree' || hash === 'diploma') {
+        showSemGrid(hash);
+    }
+})();
+
+
+/* ============================================================
+   SIDEBAR SEARCH
+============================================================ */
+document.getElementById('sbSearchInput').addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    var links = document.querySelectorAll('.subj-link');
+    var noResult = document.getElementById('sbNoResult');
+    var visible = 0;
+
+    if (!q) {
+        links.forEach(function(l){ l.closest('li').style.display = ''; });
+        document.querySelectorAll('.sem-item').forEach(function(s){ s.style.display = ''; });
+        document.querySelectorAll('.course-item').forEach(function(c){ c.style.display = ''; });
+        noResult.style.display = 'none';
+        return;
+    }
+
+    // Open all accordions for search
+    document.querySelectorAll('.course-item').forEach(function(c){ c.classList.add('open'); });
+    document.querySelectorAll('.sem-item').forEach(function(s){ s.classList.add('open'); });
+
+    links.forEach(function(l) {
+        var text = l.textContent.toLowerCase();
+        var show = text.includes(q);
+        l.closest('li').style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    // Hide sems with no visible subjects
+    document.querySelectorAll('.sem-item').forEach(function(sem) {
+        var anyVisible = Array.from(sem.querySelectorAll('.subj-list > li')).some(function(li){ return li.style.display !== 'none'; });
+        sem.style.display = anyVisible ? '' : 'none';
+    });
+
+    // Hide courses with no visible sems
+    document.querySelectorAll('.course-item').forEach(function(course) {
+        var anyVisible = Array.from(course.querySelectorAll('.sem-item')).some(function(s){ return s.style.display !== 'none'; });
+        course.style.display = anyVisible ? '' : 'none';
+    });
+
+    noResult.style.display = visible === 0 ? 'block' : 'none';
 });
-    </script>
+</script>
 
 </body>
 </html>
