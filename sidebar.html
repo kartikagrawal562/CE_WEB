@@ -667,6 +667,9 @@ body {
     backdrop-filter: blur(2px);
 }
 
+
+
+
 /* ============================================================
    RESPONSIVE
 ============================================================ */
@@ -691,6 +694,44 @@ body {
     .inline-subject-header { padding: 16px 16px 14px; gap: 12px; }
     .inline-section { padding: 14px 16px; }
     .inline-file-item { flex-wrap: wrap; }
+}
+
+
+/* ============================================================
+   ACADEMIC CALENDAR
+============================================================ */
+
+.calendar-link {
+    text-decoration: none;
+}
+
+.calendar-link i {
+    width: 16px;
+    text-align: center;
+}
+
+
+/* Academic Calendar hover */
+#course-calendar .subj-link:hover {
+    background: rgba(247, 201, 72, 0.08);
+    color: #f7c948;
+    border-left-color: #f7c948;
+}
+
+
+/* Academic Calendar active/open button */
+#course-calendar.open > .course-btn {
+    background: rgba(247, 201, 72, 0.12);
+    color: #f7c948;
+}
+
+#course-calendar.open > .course-btn .course-btn-icon {
+    background: rgba(247, 201, 72, 0.20);
+    color: #f7c948;
+}
+
+#course-calendar.open > .course-btn .course-arrow {
+    color: #f7c948;
 }
     </style>
 </head>
@@ -737,6 +778,10 @@ body {
             <i class="fa-solid fa-house"></i>
             Home
         </a>
+
+        <!--Academic calender  -->
+        
+
 
         <!-- ── MASTER ────────────────────────── -->
         <div class="sb-section-label">
