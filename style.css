@@ -1926,51 +1926,46 @@ a {
         gap: 20px;
     }
     .sem3dip-subject-header {
-        padding: 16px 16px 14px;
-        gap: 12px;
+        padding: 14px 14px 12px;
+        gap: 10px;
     }
     .sem3dip-subject-number {
-        min-width: 42px;
-        height: 42px;
-        font-size: 1rem;
+        min-width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
     }
     .sem3dip-subject-info h2 {
-        font-size: 0.92rem;
+        font-size: 0.9rem;
     }
     .sem3dip-material-section {
-        padding: 16px 16px;
+        padding: 14px 14px;
     }
     .sem3dip-file-item {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 8px;
+        padding: 9px 12px;
+    }
+    .sem3dip-file-item > span {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .sem3dip-file-actions {
+        flex-shrink: 0;
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+    .sem3dip-view-btn,
+    .sem3dip-download-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 6px;
+        gap: 5px;
+        flex: none;
+        flex-shrink: 0;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .sem3dip-file-actions {
     display: flex;
@@ -2016,14 +2011,21 @@ a {
     transform: translateY(-2px);
 }
 
-@media (max-width: 500px) {
-    .sem3dip-file-actions {
-        width: 100%;
+@media (max-width: 480px) {
+    .sem3dip-file-item {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .sem3dip-file-item > span {
+        font-size: 0.82rem;
     }
 
     .sem3dip-view-btn,
     .sem3dip-download-btn {
-        flex: 1;
+        padding: 5px 8px;
+        font-size: 11.5px;
+        gap: 4px;
     }
 }
 
@@ -2438,3 +2440,410 @@ a {
         grid-template-columns: 1fr;
     }
 }
+
+/* =========================================================
+   DOCUMENT PREVIEWER MODAL STYLES
+========================================================= */
+
+.doc-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.doc-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.doc-modal-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 88vh;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.doc-modal-overlay.active .doc-modal-container {
+    transform: scale(1);
+}
+
+.doc-modal-container.is-fullscreen {
+    max-width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.doc-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.doc-modal-title-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+}
+
+.doc-modal-icon-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #e0e7ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.doc-modal-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doc-modal-subtitle {
+    font-size: 0.82rem;
+    color: #64748b;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doc-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.doc-modal-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.doc-modal-btn-download {
+    background: #2563eb;
+    color: #ffffff !important;
+}
+
+.doc-modal-btn-download:hover {
+    background: #1d4ed8;
+}
+
+.doc-modal-btn-icon {
+    width: 38px;
+    padding: 0;
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.doc-modal-btn-icon:hover {
+    background: #cbd5e1;
+    color: #0f172a;
+}
+
+.doc-modal-btn-close {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.doc-modal-btn-close:hover {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.doc-modal-body {
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    background: #f1f5f9;
+    padding: 24px;
+}
+
+.doc-modal-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(241, 245, 249, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 10;
+    color: #475569;
+    font-weight: 500;
+}
+
+.doc-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #cbd5e1;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: docSpin 0.8s linear infinite;
+}
+
+@keyframes docSpin {
+    to { transform: rotate(360deg); }
+}
+
+.doc-modal-content {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+}
+
+.doc-pdf-iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 70vh;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.doc-modal-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+/* Document Rendered Container (Word Docs) */
+.docx-rendered-container {
+    width: 100%;
+    max-width: 820px;
+    background: #ffffff;
+    padding: 48px 56px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    color: #1e293b;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    overflow-x: auto;
+}
+
+.docx-rendered-container h1,
+.docx-rendered-container h2,
+.docx-rendered-container h3,
+.docx-rendered-container h4 {
+    color: #0f172a;
+    font-weight: 700;
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+    line-height: 1.3;
+}
+
+.docx-rendered-container h1 { font-size: 1.8rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+.docx-rendered-container h2 { font-size: 1.45rem; }
+.docx-rendered-container h3 { font-size: 1.2rem; }
+
+.docx-rendered-container p {
+    margin-bottom: 1.2em;
+}
+
+.docx-rendered-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    font-size: 0.95rem;
+}
+
+.docx-rendered-container th,
+.docx-rendered-container td {
+    border: 1px solid #cbd5e1;
+    padding: 10px 14px;
+    text-align: left;
+}
+
+.docx-rendered-container th {
+    background: #f8fafc;
+    font-weight: 600;
+}
+
+.docx-rendered-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1em 0;
+}
+
+.docx-rendered-container ul,
+.docx-rendered-container ol {
+    margin-bottom: 1.2em;
+    padding-left: 24px;
+}
+
+.docx-rendered-container blockquote {
+    border-left: 4px solid #2563eb;
+    padding-left: 16px;
+    margin: 1.2em 0;
+    color: #475569;
+    font-style: italic;
+}
+
+/* Fallback Card */
+.doc-fallback-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 12px;
+    max-width: 500px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.doc-fallback-icon {
+    font-size: 3.5rem;
+    color: #2563eb;
+    margin-bottom: 16px;
+}
+
+.doc-fallback-card h4 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.doc-fallback-msg {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.doc-fallback-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.doc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.doc-btn-primary { background: #2563eb; color: #ffffff !important; }
+.doc-btn-primary:hover { background: #1d4ed8; }
+
+.doc-btn-secondary { background: #4f46e5; color: #ffffff !important; }
+.doc-btn-secondary:hover { background: #4338ca; }
+
+.doc-btn-outline { background: transparent; border: 1px solid #cbd5e1; color: #334155 !important; }
+.doc-btn-outline:hover { background: #f8fafc; border-color: #94a3b8; }
+
+/* Toast Notification */
+.doc-toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.doc-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #0f172a;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+}
+
+.doc-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.doc-toast-info i { color: #38bdf8; }
+
+@media (max-width: 640px) {
+    .docx-rendered-container {
+        padding: 24px 20px;
+    }
+
+    .doc-modal-header {
+        padding: 12px 16px;
+    }
+
+    .doc-modal-title {
+        font-size: 0.98rem;
+    }
+
+    .doc-modal-btn-download span {
+        display: none;
+    }
+}
+
