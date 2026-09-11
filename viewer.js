@@ -1,21 +1,78 @@
 /**
- * Universal Document Previewer Modal for CE Web
+ * Universal Document Previewer & Search Script for CE Web
  * Handles previewing .docx, .pdf, images, web links, and Google Drive links directly on page.
+ * Provides direct open and download options for all file types.
  */
 
 (function () {
     'use strict';
 
-    // Inject CSS styles dynamically if needed or ensure modal elements exist
+    // Global Search Function for all Semester & Master pages
+    window.filterSubjectRows = function () {
+        var searchInput = document.getElementById('subjectSearchInput');
+        if (!searchInput) return;
+        var q = searchInput.value.trim().toLowerCase();
+
+        // Target all possible subject card layouts across degree, diploma & master pages
+        var cards = document.querySelectorAll(
+            '.sem3dip-subject-card, .subj-list-card, .subject-card, .sem-subject-card'
+        );
+
+        var visible = 0;
+        cards.forEach(function (card) {
+            var text = card.textContent.toLowerCase();
+            var codeAttr = (card.getAttribute('data-subject-code') || '').toLowerCase();
+            var nameAttr = (card.getAttribute('data-subject-name') || '').toLowerCase();
+
+            var match = !q || text.includes(q) || codeAttr.includes(q) || nameAttr.includes(q);
+
+            if (match) {
+                card.style.display = '';
+                card.classList.remove('subj-hidden');
+                visible++;
+            } else {
+                card.style.display = 'none';
+                card.classList.add('subj-hidden');
+            }
+        });
+
+        // Handle no result message
+        var noResultMsg = document.getElementById('sem3dipNoResult') || document.querySelector('.home-no-result');
+        if (noResultMsg && cards.length > 0) {
+            if (visible === 0 && q !== '') {
+                noResultMsg.style.display = 'block';
+            } else {
+                noResultMsg.style.display = 'none';
+            }
+        }
+    };
+
+    // Initialize Modal and Global Events when DOM is ready
     document.addEventListener('DOMContentLoaded', function () {
         initDocumentViewerModal();
         attachEventListeners();
+        setupSearchInput();
     });
 
-    // Also run immediately if DOM is already loaded
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
         initDocumentViewerModal();
         attachEventListeners();
+        setupSearchInput();
+    }
+
+    function setupSearchInput() {
+        var searchInput = document.getElementById('subjectSearchInput');
+        if (searchInput && !searchInput.dataset.listenerAttached) {
+            searchInput.dataset.listenerAttached = 'true';
+            searchInput.addEventListener('input', function () {
+                window.filterSubjectRows();
+            });
+            searchInput.addEventListener('keyup', function (e) {
+                if (e.key === 'Enter') {
+                    window.filterSubjectRows();
+                }
+            });
+        }
     }
 
     function initDocumentViewerModal() {
@@ -35,6 +92,10 @@
                         </div>
                     </div>
                     <div class="doc-modal-actions">
+                        <a href="#" id="docModalOpenDirectBtn" class="doc-modal-action-btn doc-modal-btn-direct" target="_blank" rel="noopener noreferrer" title="Open Direct in New Tab">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span>Open Direct</span>
+                        </a>
                         <a href="#" id="docModalDownloadBtn" class="doc-modal-action-btn doc-modal-btn-download" download title="Download File">
                             <i class="fa-solid fa-download"></i>
                             <span>Download</span>
@@ -69,27 +130,31 @@
         var closeBtn = document.getElementById('docModalCloseBtn');
         var fullscreenBtn = document.getElementById('docModalFullscreenBtn');
 
-        closeBtn.addEventListener('click', closeDocumentViewer);
-        
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) {
-                closeDocumentViewer();
-            }
-        });
+        if (closeBtn) closeBtn.addEventListener('click', closeDocumentViewer);
 
-        fullscreenBtn.addEventListener('click', function () {
-            var container = modal.querySelector('.doc-modal-container');
-            container.classList.toggle('is-fullscreen');
-            var icon = fullscreenBtn.querySelector('i');
-            if (container.classList.contains('is-fullscreen')) {
-                icon.className = 'fa-solid fa-compress';
-            } else {
-                icon.className = 'fa-solid fa-expand';
-            }
-        });
+        if (modal) {
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    closeDocumentViewer();
+                }
+            });
+        }
+
+        if (fullscreenBtn) {
+            fullscreenBtn.addEventListener('click', function () {
+                var container = modal.querySelector('.doc-modal-container');
+                container.classList.toggle('is-fullscreen');
+                var icon = fullscreenBtn.querySelector('i');
+                if (container.classList.contains('is-fullscreen')) {
+                    icon.className = 'fa-solid fa-compress';
+                } else {
+                    icon.className = 'fa-solid fa-expand';
+                }
+            });
+        }
 
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
+            if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
                 closeDocumentViewer();
             }
         });
@@ -118,7 +183,7 @@
                 }
 
                 if (!href || href === '#' || href === 'javascript:void(0)') {
-                    showToast('No material file or link uploaded yet for this item.', 'info');
+                    showToast('No material file uploaded yet for this item. Please check back later.', 'info');
                     return;
                 }
 
@@ -133,7 +198,7 @@
                 dHref = dHref.trim();
                 if (!dHref || dHref === '#' || dHref === 'javascript:void(0)') {
                     e.preventDefault();
-                    showToast('No file available for download yet.', 'info');
+                    showToast('No material file uploaded yet for this item to download.', 'info');
                 }
             }
         });
@@ -146,11 +211,14 @@
         var modalContent = document.getElementById('docModalContent');
         var modalLoader = document.getElementById('docModalLoader');
         var downloadBtn = document.getElementById('docModalDownloadBtn');
+        var openDirectBtn = document.getElementById('docModalOpenDirectBtn');
         var iconBadge = document.getElementById('docModalIconBadge');
 
         modalTitle.textContent = title || 'Document Preview';
         modalSubtitle.textContent = getFileName(url);
-        downloadBtn.setAttribute('href', url);
+
+        if (downloadBtn) downloadBtn.setAttribute('href', url);
+        if (openDirectBtn) openDirectBtn.setAttribute('href', url);
 
         modalContent.innerHTML = '';
         modalLoader.style.display = 'flex';
@@ -170,7 +238,7 @@
         } else if (isWebUrl(url)) {
             loadWebPageDocument(url);
         } else {
-            // Fallback for other file types
+            // Fallback for other file types (zip, txt, etc.)
             loadGenericDocument(url);
         }
     }
@@ -181,7 +249,7 @@
         modal.classList.remove('active');
         document.body.style.overflow = '';
         var modalContent = document.getElementById('docModalContent');
-        modalContent.innerHTML = '';
+        if (modalContent) modalContent.innerHTML = '';
     }
 
     function loadDocxDocument(url) {
@@ -189,7 +257,7 @@
         var modalLoader = document.getElementById('docModalLoader');
 
         if (typeof mammoth === 'undefined') {
-            renderDocxFallback(url, 'Mammoth.js library is loading or unavailable.');
+            renderDocxFallback(url, 'Mammoth.js parsing library is unavailable.');
             return;
         }
 
@@ -208,37 +276,45 @@
                 var html = result.value;
 
                 if (!html || !html.trim()) {
-                    html = '<p><em>The document is empty or could not format text.</em></p>';
+                    html = '<p><em>The document is empty or text formatting could not be extracted.</em></p>';
                 }
 
-                modalContent.innerHTML = '<div class="docx-rendered-container">' + html + '</div>';
+                modalContent.innerHTML = `
+                    <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                        <div class="doc-pdf-toolbar">
+                            <span class="doc-pdf-info"><i class="fa-solid fa-file-word"></i> Word Document (.docx) Preview</span>
+                            <div class="doc-pdf-actions">
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn-sm doc-btn-direct">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct
+                                </a>
+                                <a href="${url}" download class="doc-btn-sm doc-btn-dl">
+                                    <i class="fa-solid fa-download"></i> Download File
+                                </a>
+                            </div>
+                        </div>
+                        <div class="docx-rendered-container">${html}</div>
+                    </div>
+                `;
             })
             .catch(function (err) {
                 console.warn('DOCX arrayBuffer fetch error:', err);
-                renderDocxFallback(url, 'Direct local file parsing restricted. View in Online Viewer or Download.');
+                renderDocxFallback(url, 'Direct local in-modal parsing restricted by browser security. Click below to open directly or download.');
             });
     }
 
     function renderDocxFallback(url, message) {
         var modalContent = document.getElementById('docModalContent');
         var modalLoader = document.getElementById('docModalLoader');
-        modalLoader.style.display = 'none';
-
-        var encodedUrl = encodeURIComponent(window.location.origin + '/' + url.replace(/^\.\//, ''));
-        var googleDocsUrl = 'https://docs.google.com/viewer?url=' + encodedUrl + '&embedded=true';
-        var officeViewerUrl = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodedUrl;
+        if (modalLoader) modalLoader.style.display = 'none';
 
         modalContent.innerHTML = `
             <div class="doc-fallback-card">
                 <div class="doc-fallback-icon"><i class="fa-solid fa-file-word"></i></div>
-                <h4>Word Document (.docx) Preview</h4>
+                <h4>Word Document (.docx)</h4>
                 <p class="doc-fallback-msg">${message}</p>
                 <div class="doc-fallback-actions">
-                    <a href="${officeViewerUrl}" target="_blank" rel="noopener noreferrer" class="doc-btn doc-btn-primary">
-                        <i class="fa-solid fa-up-right-from-square"></i> Open in Office Online
-                    </a>
-                    <a href="${googleDocsUrl}" target="_blank" rel="noopener noreferrer" class="doc-btn doc-btn-secondary">
-                        <i class="fa-solid fa-up-right-from-square"></i> Open in Google Viewer
+                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn doc-btn-primary">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct in New Tab
                     </a>
                     <a href="${url}" download class="doc-btn doc-btn-outline">
                         <i class="fa-solid fa-download"></i> Download File
@@ -252,39 +328,88 @@
         var modalContent = document.getElementById('docModalContent');
         var modalLoader = document.getElementById('docModalLoader');
 
+        var wrapper = document.createElement('div');
+        wrapper.className = 'doc-pdf-wrapper';
+
+        var toolbar = document.createElement('div');
+        toolbar.className = 'doc-pdf-toolbar';
+        toolbar.innerHTML = `
+            <span class="doc-pdf-info"><i class="fa-solid fa-file-pdf"></i> PDF Document Preview</span>
+            <div class="doc-pdf-actions">
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn-sm doc-btn-direct">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct
+                </a>
+                <a href="${url}" download class="doc-btn-sm doc-btn-dl">
+                    <i class="fa-solid fa-download"></i> Download PDF
+                </a>
+            </div>
+        `;
+
         var iframe = document.createElement('iframe');
         iframe.className = 'doc-pdf-iframe';
         iframe.src = url + '#toolbar=1';
 
         iframe.onload = function () {
-            modalLoader.style.display = 'none';
+            if (modalLoader) modalLoader.style.display = 'none';
         };
 
         iframe.onerror = function () {
-            modalLoader.style.display = 'none';
-            modalContent.innerHTML = `
-                <div class="doc-fallback-card">
-                    <div class="doc-fallback-icon"><i class="fa-solid fa-file-pdf"></i></div>
-                    <h4>PDF Preview</h4>
-                    <p>Unable to load PDF preview in iframe.</p>
-                    <a href="${url}" download class="doc-btn doc-btn-primary">
-                        <i class="fa-solid fa-download"></i> Download PDF
-                    </a>
-                </div>
-            `;
+            if (modalLoader) modalLoader.style.display = 'none';
+            renderPdfFallback(url, 'Unable to load PDF preview in iframe.');
         };
 
-        modalContent.appendChild(iframe);
+        wrapper.appendChild(toolbar);
+        wrapper.appendChild(iframe);
+        modalContent.appendChild(wrapper);
 
-        // Safety timeout for loader
+        // Safety timeout for loader hide
         setTimeout(function () {
-            modalLoader.style.display = 'none';
+            if (modalLoader) modalLoader.style.display = 'none';
         }, 1200);
+    }
+
+    function renderPdfFallback(url, message) {
+        var modalContent = document.getElementById('docModalContent');
+        var modalLoader = document.getElementById('docModalLoader');
+        if (modalLoader) modalLoader.style.display = 'none';
+
+        modalContent.innerHTML = `
+            <div class="doc-fallback-card">
+                <div class="doc-fallback-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                <h4>PDF Preview</h4>
+                <p class="doc-fallback-msg">${message}</p>
+                <div class="doc-fallback-actions">
+                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn doc-btn-primary">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open PDF Direct in Browser
+                    </a>
+                    <a href="${url}" download class="doc-btn doc-btn-outline">
+                        <i class="fa-solid fa-download"></i> Download PDF File
+                    </a>
+                </div>
+            </div>
+        `;
     }
 
     function loadImageDocument(url) {
         var modalContent = document.getElementById('docModalContent');
         var modalLoader = document.getElementById('docModalLoader');
+
+        var wrapper = document.createElement('div');
+        wrapper.className = 'doc-pdf-wrapper';
+
+        var toolbar = document.createElement('div');
+        toolbar.className = 'doc-pdf-toolbar';
+        toolbar.innerHTML = `
+            <span class="doc-pdf-info"><i class="fa-solid fa-image"></i> Image Preview</span>
+            <div class="doc-pdf-actions">
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn-sm doc-btn-direct">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct
+                </a>
+                <a href="${url}" download class="doc-btn-sm doc-btn-dl">
+                    <i class="fa-solid fa-download"></i> Download Image
+                </a>
+            </div>
+        `;
 
         var img = document.createElement('img');
         img.className = 'doc-modal-img';
@@ -292,46 +417,77 @@
         img.alt = 'Document Image';
 
         img.onload = function () {
-            modalLoader.style.display = 'none';
+            if (modalLoader) modalLoader.style.display = 'none';
         };
 
         img.onerror = function () {
-            modalLoader.style.display = 'none';
-            modalContent.innerHTML = '<p class="doc-error">Image could not be loaded.</p>';
+            if (modalLoader) modalLoader.style.display = 'none';
+            modalContent.innerHTML = `
+                <div class="doc-fallback-card">
+                    <div class="doc-fallback-icon"><i class="fa-solid fa-file-image"></i></div>
+                    <h4>Image Preview Error</h4>
+                    <p class="doc-fallback-msg">Image could not be loaded directly.</p>
+                    <div class="doc-fallback-actions">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn doc-btn-primary">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct
+                        </a>
+                        <a href="${url}" download class="doc-btn doc-btn-outline">
+                            <i class="fa-solid fa-download"></i> Download Image
+                        </a>
+                    </div>
+                </div>
+            `;
         };
 
-        modalContent.appendChild(img);
+        wrapper.appendChild(toolbar);
+        wrapper.appendChild(img);
+        modalContent.appendChild(wrapper);
     }
 
     function loadWebPageDocument(url) {
         var modalContent = document.getElementById('docModalContent');
         var modalLoader = document.getElementById('docModalLoader');
 
-        var iframe = document.createElement('iframe');
-        iframe.className = 'doc-pdf-iframe';
+        var wrapper = document.createElement('div');
+        wrapper.className = 'doc-pdf-wrapper';
 
-        // Check if Google Drive view link
-        if (url.includes('drive.google.com') && url.includes('/view')) {
-            url = url.replace('/view', '/preview');
+        var displayUrl = url;
+        if (displayUrl.includes('drive.google.com') && displayUrl.includes('/view')) {
+            displayUrl = displayUrl.replace('/view', '/preview');
         }
 
-        iframe.src = url;
+        var toolbar = document.createElement('div');
+        toolbar.className = 'doc-pdf-toolbar';
+        toolbar.innerHTML = `
+            <span class="doc-pdf-info"><i class="fa-solid fa-globe"></i> Web Material Preview</span>
+            <div class="doc-pdf-actions">
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn-sm doc-btn-direct">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct
+                </a>
+            </div>
+        `;
+
+        var iframe = document.createElement('iframe');
+        iframe.className = 'doc-pdf-iframe';
+        iframe.src = displayUrl;
 
         iframe.onload = function () {
-            modalLoader.style.display = 'none';
+            if (modalLoader) modalLoader.style.display = 'none';
         };
 
-        modalContent.appendChild(iframe);
+        wrapper.appendChild(toolbar);
+        wrapper.appendChild(iframe);
+        modalContent.appendChild(wrapper);
 
         setTimeout(function () {
-            modalLoader.style.display = 'none';
+            if (modalLoader) modalLoader.style.display = 'none';
         }, 1500);
     }
 
     function loadGenericDocument(url) {
         var modalContent = document.getElementById('docModalContent');
         var modalLoader = document.getElementById('docModalLoader');
-        modalLoader.style.display = 'none';
+        if (modalLoader) modalLoader.style.display = 'none';
 
         var fileName = getFileName(url);
         var ext = getFileExtension(url).toUpperCase();
@@ -340,10 +496,10 @@
             <div class="doc-fallback-card">
                 <div class="doc-fallback-icon"><i class="fa-solid fa-file"></i></div>
                 <h4>${fileName}</h4>
-                <p>Format: <strong>${ext || 'File'}</strong></p>
+                <p class="doc-fallback-msg">Format: <strong>${ext || 'File'}</strong></p>
                 <div class="doc-fallback-actions">
                     <a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-btn doc-btn-primary">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open in New Tab
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Direct in New Tab
                     </a>
                     <a href="${url}" download class="doc-btn doc-btn-outline">
                         <i class="fa-solid fa-download"></i> Download File
@@ -354,6 +510,7 @@
     }
 
     function updateIconBadge(badge, ext) {
+        if (!badge) return;
         var iconMap = {
             'docx': 'fa-file-word',
             'doc': 'fa-file-word',
@@ -362,6 +519,7 @@
             'jpeg': 'fa-file-image',
             'png': 'fa-file-image',
             'svg': 'fa-file-image',
+            'webp': 'fa-file-image',
             'pptx': 'fa-file-powerpoint',
             'ppt': 'fa-file-powerpoint',
             'xlsx': 'fa-file-excel',
