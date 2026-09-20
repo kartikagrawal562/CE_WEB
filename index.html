@@ -300,6 +300,65 @@
         </div>
     </footer>
 
+
+
+
+
+
+
+    <!-- for popup massages -->
+     <!-- Responsive Popup Poster -->
+<div class="poster-popup" id="posterPopup">
+    <div class="poster-overlay"></div>
+
+    <div class="poster-container">
+        <button class="poster-close" id="posterClose" aria-label="Close Poster">
+            &times;
+        </button>
+
+        <img 
+            src="./popup_image.png" 
+            alt="Event Poster"
+            class="poster-image"
+        >
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const posterPopup = document.getElementById("posterPopup");
+    const posterClose = document.getElementById("posterClose");
+    const posterOverlay = document.querySelector(".poster-overlay");
+
+    // Show popup
+    posterPopup.classList.add("active");
+
+    // Close popup
+    function closePoster() {
+        posterPopup.classList.remove("active");
+    }
+
+    posterClose.addEventListener("click", closePoster);
+
+    // Close when clicking outside poster
+    posterOverlay.addEventListener("click", closePoster);
+
+    // Close using ESC key
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closePoster();
+        }
+    });
+
+});
+</script>
+
+
+
+
+
+
+
     <script>
         /* ── Search / filter semester cards ── */
         function filterSemCards() {
@@ -328,6 +387,7 @@
             if (input) input.addEventListener('input', filterSemCards);
         });
     </script>
+
 
 <script src="./mammoth.browser.min.js"></script>
 <script src="./viewer.js"></script>
