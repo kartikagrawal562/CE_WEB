@@ -1220,102 +1220,7 @@ body {
    DATA — all subject materials
    Add links to href/download as content is uploaded.
 ============================================================ */
-const MATERIALS = {
-    /* ── M.E. Semester 1 ──────────────────────── */
-    me1s1: { sections: [
-        { icon:'fa-book',      title:'Syllabus',         files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
-        { icon:'fa-file-lines',title:'Units Notes',       files:[{ name:'Unit Notes PDF', view:'', dl:'' }] },
-        { icon:'fa-pen-to-square', title:'Question Bank', files:[{ name:'Question Bank PDF', view:'', dl:'' }] }
-    ]},
-    me1s2: { sections: [
-        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
-        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
-    ]},
-    me1s3: { sections: [
-        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
-        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
-    ]},
-    me1s4: { sections: [
-        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
-        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
-    ]},
-    me1s5: { sections: [
-        { icon:'fa-book', title:'Syllabus', files:[{ name:'Syllabus PDF', view:'', dl:'' }] },
-        { icon:'fa-file-lines', title:'Units Notes', files:[{ name:'Unit Notes PDF', view:'', dl:'' }] }
-    ]},
-    /* M.E. Sem 2 */
-    me2s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me2s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me2s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me2s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    /* M.E. Sem 3 */
-    me3s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me3s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me3s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me3s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    /* M.E. Sem 4 */
-    me4s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-    me4s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]}]},
-
-    /* ── B.E. Semester 1 ──────────────────────── */
-    be1s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]},{icon:'fa-file-circle-question',title:'End Sem Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be1s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be1s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be1s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be1s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    /* B.E. Sem 3 */
-    be3s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be3s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be3s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be3s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be3s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be3s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    /* B.E. Sem 4 */
-    be4s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be4s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be4s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be4s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be4s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    /* B.E. Sem 5–7 (abbreviated — same pattern) */
-    be5s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be5s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be5s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be5s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be5s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be6s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be6s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be6s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be6s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be6s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be6s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    be7s7:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    /* ── Diploma Sem 1 ─────────────────────────── */
-    dip1s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip1s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip1s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip1s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    /* Diploma Sem 3 */
-    dip3s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip3s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip3s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip3s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip3s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip3s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    /* Diploma Sem 5 */
-    dip5s1:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip5s2:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip5s3:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-flask',title:'Lab Manual',files:[{name:'Lab Manual PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip5s4:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip5s5:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip5s6:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-    dip5s7:{sections:[{icon:'fa-book',title:'Syllabus',files:[{name:'Syllabus PDF',view:'',dl:''}]},{icon:'fa-file-lines',title:'Units Notes',files:[{name:'Unit Notes PDF',view:'',dl:''}]},{icon:'fa-pen-to-square',title:'Mid Question Bank',files:[{name:'Question Bank PDF',view:'',dl:''}]}]},
-};
+var MATERIALS = {};
 
 /* ============================================================
    STATE
@@ -1607,7 +1512,8 @@ document.getElementById('sbSearchInput').addEventListener('input', function() {
 </script>
 
 
-<script src="./mammoth.browser.min.js"></script>
+<script src="./dashboard-materials.js"></script>
+    <script src="./mammoth.browser.min.js"></script>
 <script src="./viewer.js"></script>
 
 </body>
